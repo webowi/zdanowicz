@@ -1,12 +1,9 @@
 import styled from "styled-components";
 import { colors } from "../../utils/colors";
 import contactBackgrouindImage from "../../assets/contact-section-image.webp";
-import { maxDeviceSize, minDeviceSize } from "../../utils/deviceSize";
 import { SectionTitle } from "../../components/atoms/SectionTitle/SectionTitle";
 import { ContactButton } from "../../components/atoms/ContactButton/ContactButton";
 import { IoIosMail } from "react-icons/io";
-import starImage from "../../assets/star.png";
-import springImage from "../../assets/spring.png";
 
 export const Contact = () => {
   return (
@@ -63,22 +60,22 @@ const StyledContent = styled.div`
   position: relative;
 `;
 
-const StyledImageStar = styled.img`
-  display: none;
-  @media ${minDeviceSize.tablet} {
-    display: block;
-    position: absolute;
-    left: -90%;
-    top: -80%;
-  }
-`;
+// const StyledImageStar = styled.img`
+//   display: none;
+//   @media ${minDeviceSize.tablet} {
+//     display: block;
+//     position: absolute;
+//     left: -90%;
+//     top: -80%;
+//   }
+// `;
 
-const StyledImageSpring = styled.img`
-  display: none;
-  @media ${minDeviceSize.tablet} {
-    display: block;
-    position: absolute;
-    right: -90%;
-    top: 30%;
-  }
-`;
+// const StyledImageSpring = styled.img`
+//   display: none;
+//   @media ${minDeviceSize.tablet} {
+//     display: block;
+//     position: absolute;
+//     right: -90%;
+//     top: 30%;
+//   }
+// `;

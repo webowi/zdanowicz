@@ -64,9 +64,9 @@ const realizationsData = [
   },
 ];
 
-const firstColumn = realizationsData.slice(0, 3); // 0, 3
-const secondColumn = realizationsData.slice(3, 4);
-const thirdColumn = realizationsData.slice(4, 6);
+// const firstColumn = realizationsData.slice(0, 3); // 0, 3
+// const secondColumn = realizationsData.slice(3, 4);
+// const thirdColumn = realizationsData.slice(4, 6);
 
 export const Realizations = () => {
   return (
