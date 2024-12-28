@@ -1,16 +1,26 @@
 import styled from "styled-components";
 import { colors } from "../../utils/colors";
 import { Tag } from "../../components/atoms/Tag/Tag";
-import pyramidImage from "../../assets/pyramid.png";
-import productImage from "../../assets/product-image.png";
-import tubeImage from "../../assets/tube.png";
+import productImage from "../../assets/product-image.webp";
 import { maxDeviceSize } from "../../utils/deviceSize";
 import { SectionDescription } from "../../components/atoms/SectionDescription/SectionDescription";
 import { SectionTitle } from "../../components/atoms/SectionTitle/SectionTitle";
+import { motion, useScroll, useTransform } from "motion/react";
+import { useRef } from "react";
+import laptopImage from "../../assets/laptop.webp";
+import peopleImage from "../../assets/people.webp";
 
 export const ProductShowcase = () => {
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const translateY = useTransform(scrollYProgress, [0, 1], [150, -150]);
+
   return (
-    <StyledSection>
+    <StyledSection ref={sectionRef}>
       <div className="container">
         <StyledContent>
           <StyledTagContainer>
@@ -28,17 +38,19 @@ export const ProductShowcase = () => {
         </StyledContent>
         <StyledImagesContainer>
           <StyledProductImage src={productImage} alt="Product image" />
-          <StyledPyramidImage
-            src={pyramidImage}
-            height={262}
-            width={262}
-            alt="Pyramid image"
+          <StyledLaptopImage
+            src={laptopImage}
+            height={200}
+            width={200}
+            alt="Laptop image"
+            style={{ translateY }}
           />
-          <StyledTubeImage
-            src={tubeImage}
-            height={262}
-            width={262}
-            alt="Tub image"
+          <StyledPeopleImage
+            src={peopleImage}
+            height={200}
+            width={300}
+            alt="People image"
+            style={{ translateY }}
           />
         </StyledImagesContainer>
       </div>
@@ -46,7 +58,7 @@ export const ProductShowcase = () => {
   );
 };
 
-const StyledSection = styled.section`
+const StyledSection = styled.section<{ ref: any }>`
   background: linear-gradient(to bottom, ${colors.white}, #d2dcff);
   padding-top: 6rem;
   overflow-x: clip;
@@ -70,23 +82,22 @@ const StyledImagesContainer = styled.div`
 const StyledProductImage = styled.img`
   width: 100%;
   margin-top: 2.5rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
 `;
 
-const StyledPyramidImage = styled.img`
+const StyledLaptopImage = styled(motion.img)`
   @media ${maxDeviceSize.phone} {
     display: none;
   }
   position: absolute;
-  right: -9rem;
-  top: -8rem;
+  right: 30rem;
+  top: 10rem;
 `;
 
-const StyledTubeImage = styled.img`
+const StyledPeopleImage = styled(motion.img)`
   @media ${maxDeviceSize.phone} {
     display: none;
   }
   position: absolute;
-  left: -9rem;
-  bottom: -5rem;
+  left: 1rem;
+  bottom: 17rem;
 `;

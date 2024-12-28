@@ -4,14 +4,24 @@ import { Button } from "../../components/atoms/Button/Button";
 import { IoIosMail } from "react-icons/io";
 import { ContactButton } from "../../components/atoms/ContactButton/ContactButton";
 import { FaArrowRight } from "react-icons/fa6";
-import cogImage from "../../assets/cog.png";
-import cylinderImage from "../../assets/cylinder.png";
-import noodleImage from "../../assets/noodle.png";
 import { maxDeviceSize, minDeviceSize } from "../../utils/deviceSize";
+import { motion, useScroll, useTransform } from "motion/react";
+import { useRef } from "react";
+import cloudImage from "../../assets/cloud.webp";
+import peopleBulbPhoneImage from "../../assets/people-bulb-phone.webp";
+import laptopMailPeelImage from "../../assets/laptop-mail-peel.webp";
 
 export const Hero = () => {
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start end", "end start"],
+  });
+
+  const translateY = useTransform(scrollYProgress, [0, 1], [150, -150]);
+
   return (
-    <StyledSection>
+    <StyledSection ref={heroRef}>
       <div className="container">
         <StyledHeroContainer>
           <StyledHeroContentContainer>
@@ -49,17 +59,34 @@ export const Hero = () => {
             </StyledButtonWrapper>
           </StyledHeroContentContainer>
           <StyledImageWrapper>
-            <StyledImageCog src={cogImage} alt="Cog image" />
-            <StyledImageCylinder
-              src={cylinderImage}
-              width={220}
-              height={220}
-              alt="cylidner image"
+            <StyledImageCloud
+              width={320}
+              height={320}
+              src={cloudImage}
+              alt="Cloud image"
+              animate={{
+                translateY: [-30, 30],
+              }}
+              transition={{
+                repeat: Infinity,
+                repeatType: "mirror",
+                duration: 3,
+                ease: "easeInOut",
+              }}
             />
-            <StyledImageNoodler
-              src={noodleImage}
-              width={220}
-              alt="noodle image"
+            <StyledImagePhoneBulbPeople
+              src={peopleBulbPhoneImage}
+              width={400}
+              height={400}
+              alt="Phone image people image"
+              style={{ translateY }}
+            />
+            <StyledImageLaptopMailPeel
+              src={laptopMailPeelImage}
+              width={320}
+              height={420}
+              alt="Laptop mail peel image"
+              style={{ translateY }}
             />
           </StyledImageWrapper>
         </StyledHeroContainer>
@@ -68,7 +95,7 @@ export const Hero = () => {
   );
 };
 
-const StyledSection = styled.section`
+const StyledSection = styled.section<{ ref: any }>`
   padding-left: 2rem;
   padding-right: 2rem;
   padding-top: 2rem;
@@ -134,28 +161,24 @@ const StyledImageWrapper = styled.div`
   }
 `;
 
-const StyledImageCog = styled.img`
-  width: 100%;
-  max-width: 500px;
-
+const StyledImageCloud = styled(motion.img)`
   @media ${minDeviceSize.tablet} {
     position: absolute;
-    height: 100%;
     width: auto;
     max-width: none;
     left: -1.5rem;
   }
 
   @media ${minDeviceSize.desktop} {
-    left: 0;
+    left: 70px;
+    top: 100px;
   }
 `;
 
-const StyledImageCylinder = styled.img`
+const StyledImagePhoneBulbPeople = styled(motion.img)`
   @media ${maxDeviceSize.phone} {
     display: none;
   }
-
   @media ${minDeviceSize.tablet} {
     display: block;
     position: absolute;
@@ -165,10 +188,9 @@ const StyledImageCylinder = styled.img`
   left: -8rem;
 `;
 
-const StyledImageNoodler = styled.img`
-  top: 524px;
-  left: 448px;
-  transform: rotate(30deg);
+const StyledImageLaptopMailPeel = styled(motion.img)`
+  top: 224px;
+  left: 370px;
   @media ${maxDeviceSize.tablet} {
     display: none;
   }

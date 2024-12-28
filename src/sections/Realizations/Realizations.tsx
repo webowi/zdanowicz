@@ -3,9 +3,9 @@ import { Tag } from "../../components/atoms/Tag/Tag";
 import { SectionTitle } from "../../components/atoms/SectionTitle/SectionTitle";
 import { SectionDescription } from "../../components/atoms/SectionDescription/SectionDescription";
 import { colors } from "../../utils/colors";
-import hukInvestLogo from "../../assets/logo-huk-invest.png";
-import daoProjectLogo from "../../assets/logo-dao-project.png";
-import miedzyNamiKobietamiLogo from "../../assets/logo-miedzy-nami-kobietami.png";
+import hukInvestLogo from "../../assets/logo-huk-invest.webp";
+import daoProjectLogo from "../../assets/logo-dao-project.webp";
+import miedzyNamiKobietamiLogo from "../../assets/logo-miedzy-nami-kobietami.webp";
 import fachDachLogo from "../../assets/logo-fach-dach.webp";
 import { RealizationCard } from "../../components/molecules/RealizationCard/RealizationCard";
 
