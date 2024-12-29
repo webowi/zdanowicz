@@ -1,12 +1,12 @@
 import React from "react";
-import { Header } from "../components/organisms/Header/Header";
 import { colors } from "../utils/colors";
 import styled from "styled-components";
+import { BackHeader } from "../components/organisms/BackHeader/BackHeader";
 
 const PrivacyPolicy: React.FC = () => {
   return (
     <>
-      <Header />
+      <BackHeader />
       <StyledSection>
         <div className="container">
           <h1>Polityka Prywatności</h1>

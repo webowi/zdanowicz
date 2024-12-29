@@ -77,7 +77,7 @@ const StyledTitleContainer = styled.h3<{ inverse: boolean }>`
   font-size: 1.125rem;
   font-weight: 700;
   color: ${({ inverse }) =>
-    inverse ? "rgb(255 255 255 / 0.6)" : "rgb(0 0 0 / 0.5)"};
+    inverse ? "rgb(255 255 255 / 0.6)" : "rgb(0 0 0)"};
   line-height: 1.75rem;
 `;
 

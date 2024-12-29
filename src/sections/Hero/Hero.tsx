@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import { colors } from "../../utils/colors";
-import { Button } from "../../components/atoms/Button/Button";
 import { IoIosMail } from "react-icons/io";
 import { ContactButton } from "../../components/atoms/ContactButton/ContactButton";
-import { FaArrowRight } from "react-icons/fa6";
 import { maxDeviceSize, minDeviceSize } from "../../utils/deviceSize";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
@@ -39,23 +37,12 @@ export const Hero = () => {
                 <IoIosMail
                   style={{
                     marginRight: "0.5rem",
-                    color: colors.white,
-                    backgroundColor: colors.black,
                     width: "1rem",
                     height: "1rem",
                   }}
                 />
                 Skontaktuj się z nami
               </ContactButton>
-              <Button type="transparent">
-                <span>Zobacz nasze realizacje</span>
-                <FaArrowRight
-                  style={{
-                    width: "1.25rem",
-                    height: "1.25rem",
-                  }}
-                />
-              </Button>
             </StyledButtonWrapper>
           </StyledHeroContentContainer>
           <StyledImageWrapper>

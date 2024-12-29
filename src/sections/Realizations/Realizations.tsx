@@ -3,66 +3,8 @@ import { Tag } from "../../components/atoms/Tag/Tag";
 import { SectionTitle } from "../../components/atoms/SectionTitle/SectionTitle";
 import { SectionDescription } from "../../components/atoms/SectionDescription/SectionDescription";
 import { colors } from "../../utils/colors";
-import hukInvestLogo from "../../assets/logo-huk-invest.webp";
-import daoProjectLogo from "../../assets/logo-dao-project.webp";
-import miedzyNamiKobietamiLogo from "../../assets/logo-miedzy-nami-kobietami.webp";
-import fachDachLogo from "../../assets/logo-fach-dach.webp";
 import { RealizationCard } from "../../components/molecules/RealizationCard/RealizationCard";
-
-const realizationsData = [
-  {
-    logoSrc: hukInvestLogo,
-    companyName: "Huk Invest",
-    shortDescription: "Biuro nieruchomości",
-    realizationData: {
-      link: "https://hukinvest.pl",
-      caseStudy: [
-        "Przygotowanie i wdrożenie strony internetowej",
-        "Optymalizacja SEO",
-        "Kampanie reklamowe w Google Ads",
-      ],
-    },
-  },
-  {
-    logoSrc: daoProjectLogo,
-    companyName: "DAO Project",
-    shortDescription: "Agencja reklamowa",
-    realizationData: {
-      link: "https://daoproject.pl",
-      caseStudy: [
-        "Przygotowanie i wdrożenie strony internetowej",
-        "Optymalizacja SEO",
-        "Kampanie reklamowe w Google Ads",
-      ],
-    },
-  },
-  {
-    logoSrc: miedzyNamiKobietamiLogo,
-    companyName: "Między Nami Kobietami",
-    shortDescription: "Salon kosmetyczny",
-    realizationData: {
-      link: "https://miedzynamikobietami.pl",
-      caseStudy: [
-        "Przygotowanie i wdrożenie strony internetowej",
-        "Optymalizacja SEO",
-        "Kampanie reklamowe w Google Ads",
-      ],
-    },
-  },
-  {
-    logoSrc: fachDachLogo,
-    companyName: "Fach-Dach",
-    shortDescription: "Firma budowlana",
-    realizationData: {
-      link: "https://fach-dach.pl",
-      caseStudy: [
-        "Przygotowanie i wdrożenie strony internetowej",
-        "Optymalizacja SEO",
-        "Kampanie reklamowe w Google Ads",
-      ],
-    },
-  },
-];
+import { realizationsData } from "../../constans/realizationsData";
 
 // const firstColumn = realizationsData.slice(0, 3); // 0, 3
 // const secondColumn = realizationsData.slice(3, 4);
@@ -116,19 +58,4 @@ const StyledRealizationsContainer = styled.div`
   flex-wrap: wrap;
   gap: 1rem;
   margin-top: 5rem;
-  mask-image: linear-gradient(
-    to bottom,
-    transparent,
-    black,
-    black 25%,
-    black 75%,
-    transparent
-  );
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent,
-    black 25%,
-    black 75%,
-    transparent
-  );
 `;

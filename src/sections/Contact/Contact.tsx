@@ -13,20 +13,19 @@ export const Contact = () => {
           <SectionTitle>
             Skontaktuj się z nami, a my pomożemy Ci w stworzeniu strony
           </SectionTitle>
-          <ContactButton href={`mailto:${import.meta.env.VITE_EMAIL}`}>
+          <ContactButton
+            href={`mailto:${import.meta.env.VITE_EMAIL}`}
+            textColor={colors.white}
+          >
             <IoIosMail
               style={{
                 marginRight: "0.5rem",
-                color: colors.white,
-                backgroundColor: colors.black,
                 width: "1rem",
                 height: "1rem",
               }}
             />
             Skontaktuj się z nami
           </ContactButton>
-          {/* <StyledImageStar src={starImage} alt="star image" width={360} /> */}
-          {/* <StyledImageSpring src={springImage} alt="spring image" width={360} /> */}
         </StyledContent>
       </div>
     </StyledSection>
@@ -59,23 +58,3 @@ const StyledContent = styled.div`
   align-items: center;
   position: relative;
 `;
-
-// const StyledImageStar = styled.img`
-//   display: none;
-//   @media ${minDeviceSize.tablet} {
-//     display: block;
-//     position: absolute;
-//     left: -90%;
-//     top: -80%;
-//   }
-// `;
-
-// const StyledImageSpring = styled.img`
-//   display: none;
-//   @media ${minDeviceSize.tablet} {
-//     display: block;
-//     position: absolute;
-//     right: -90%;
-//     top: 30%;
-//   }
-// `;

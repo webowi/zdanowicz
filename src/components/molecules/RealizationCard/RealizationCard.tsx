@@ -1,10 +1,14 @@
 import styled from "styled-components";
 import { colors } from "../../../utils/colors";
-import { Button } from "../../atoms/Button/Button";
+import { ButtonLink } from "../../atoms/ButtonLink/ButtonLink";
+import { pagesPaths } from "../../../constans/pagesPaths";
 
 interface RealizationData {
+  name: string;
   link: string;
-  caseStudy: string[];
+  description: string;
+  laptopImage: string;
+  solutions: string[];
 }
 
 interface RealizationCardProps {
@@ -18,6 +22,7 @@ export const RealizationCard: React.FC<RealizationCardProps> = ({
   logoSrc,
   companyName,
   shortDescription,
+  realizationData,
 }) => {
   return (
     <StyledCard>
@@ -35,7 +40,9 @@ export const RealizationCard: React.FC<RealizationCardProps> = ({
             )}
           </StyledDescriptionContentWrapper>
         </StyledContentContainer>
-        <Button>case study</Button>
+        <ButtonLink href={pagesPaths.realization} state={realizationData}>
+          Więcej
+        </ButtonLink>
       </StyledContentWrapper>
     </StyledCard>
   );
@@ -48,7 +55,6 @@ const StyledCard = styled.div`
   height: 448px;
   border-radius: 1.5rem;
   box-shadow: 0 7px 14px #eaeaea;
-  /* border: "1px solid #f1f1f1"; */
   background-color: ${colors.white};
   color: ${colors.black};
   display: flex;
@@ -74,11 +80,7 @@ const StyledContentWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const StyledContentContainer = styled.div`
-  /* display: flex;
-  flex-direction: column;
-  justify-content: space-between; */
-`;
+const StyledContentContainer = styled.div``;
 
 const StyledCompanyName = styled.h3`
   letter-spacing: -0.025rem;
