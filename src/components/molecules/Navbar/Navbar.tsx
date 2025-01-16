@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-scroll";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { colors } from "../../../utils/colors";
 import { maxDeviceSize } from "../../../utils/deviceSize";
 import { pagesPaths } from "../../../constans/pagesPaths";
+import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -33,36 +33,13 @@ export const Navbar = () => {
       <StyledNavbarContainer>
         <StyledLogoItem href={pagesPaths.homePage}>Webowi.pl</StyledLogoItem>
         <StyledNav>
-          <StyledNavItem
-            href="#"
-            to="solutions"
-            spy
-            smooth
-            offset={50}
-            duration={500}
-          >
-            Rozwiązania
+          <StyledNavItem to={pagesPaths.offer}>Oferta</StyledNavItem>
+          <StyledNavItem to={pagesPaths.realizations}>Realizacje</StyledNavItem>
+          <StyledNavItem to={pagesPaths.machinePark}>Park maszyn</StyledNavItem>
+          <StyledNavItem to={pagesPaths.concretePlant}>
+            Betoniarnia
           </StyledNavItem>
-          <StyledNavItem
-            href="#"
-            to="realizations"
-            spy
-            smooth
-            offset={50}
-            duration={500}
-          >
-            Realizacje
-          </StyledNavItem>
-          <StyledNavItem
-            href="#"
-            to="contact"
-            spy
-            smooth
-            offset={50}
-            duration={500}
-          >
-            Kontakt
-          </StyledNavItem>
+          <StyledNavItem to={pagesPaths.contact}>Kontakt</StyledNavItem>
         </StyledNav>
         <StyledToggleButton onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? <FaTimes /> : <FaBars style={{ color: colors.black }} />}
@@ -70,41 +47,17 @@ export const Navbar = () => {
       </StyledNavbarContainer>
       <StyledMobileMenu $menuOpen={menuOpen} onClick={() => setMenuOpen(false)}>
         {menuOpen && <MobileMenuHeader>MENU</MobileMenuHeader>}
-        <MobileMenuItem
-          href="#"
-          to="solutions"
-          spy
-          smooth
-          offset={50}
-          duration={500}
-          onClick={closeMenu}
-        >
+        <MobileMenuItem to={pagesPaths.offer} onClick={closeMenu}>
           Rozwiązania
         </MobileMenuItem>
-        <MobileMenuItem
-          href="#"
-          to="realizations"
-          spy
-          smooth
-          offset={50}
-          duration={500}
-          onClick={closeMenu}
-        >
-          Realizacje
+        <MobileMenuItem to={pagesPaths.realizations}>Realizacje</MobileMenuItem>
+        <MobileMenuItem to={pagesPaths.offer}>Oferta</MobileMenuItem>
+        <MobileMenuItem to={pagesPaths.realizations}>Realizacje</MobileMenuItem>
+        <MobileMenuItem to={pagesPaths.machinePark}>Park maszyn</MobileMenuItem>
+        <MobileMenuItem to={pagesPaths.concretePlant}>
+          Betoniarnia
         </MobileMenuItem>
-        <MobileMenuItem
-          href="#"
-          to="contact"
-          spy
-          smooth
-          offset={50}
-          duration={500}
-          style={{ marginBottom: "20rem" }}
-          onClick={closeMenu}
-        >
-          Kontakt
-        </MobileMenuItem>
-        <div></div>
+        <MobileMenuItem to={pagesPaths.contact}>Kontakt</MobileMenuItem>
       </StyledMobileMenu>
     </StyledNavbarWrapper>
   );

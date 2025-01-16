@@ -22,11 +22,11 @@ const PrivacyPolicy: React.FC = () => {
           <p>
             Administratorem Twoich danych osobowych jest:
             <br />
-            <strong>Webowi</strong>
+            <strong>Nextbud Tobiasz Ratajczyk </strong>
             <br />
-            Adres: 64-920 Piła
+            Adres: Białężyn 9A, 64-700 Czarnków
             <br />
-            E-mail: biuro@webowi.pl
+            Telefon: 733 660 366
             <br />
           </p>
 
@@ -86,7 +86,7 @@ const PrivacyPolicy: React.FC = () => {
           </ul>
           <p>
             Aby skorzystać z tych praw, skontaktuj się z nami pod adresem
-            e-mail: [adres-email@example.com].
+            e-mail: [biuro@nextbud.eu].
           </p>
 
           <h2>7. Czas przechowywania danych</h2>

@@ -1,33 +1,34 @@
 import styled from "styled-components";
 import { colors } from "../../../utils/colors";
-import { ButtonLink } from "../../atoms/ButtonLink/ButtonLink";
-import { pagesPaths } from "../../../constans/pagesPaths";
+// import { ButtonLink } from "../../atoms/ButtonLink/ButtonLink";
+// import { pagesPaths } from "../../../constans/pagesPaths";
+import { getImageUrl } from "../../../services/ImageProvider";
 
-interface RealizationData {
-  name: string;
-  link: string;
-  description: string;
-  laptopImage: string;
-  solutions: string[];
-}
+// interface RealizationData {
+//   name: string;
+//   link: string;
+//   description: string;
+//   laptopImage: string;
+//   solutions: string[];
+// }
 
 interface RealizationCardProps {
   logoSrc: string;
   companyName: string;
   shortDescription?: string;
-  realizationData: RealizationData;
+  // realizationData: RealizationData;
 }
 
 export const RealizationCard: React.FC<RealizationCardProps> = ({
   logoSrc,
   companyName,
   shortDescription,
-  realizationData,
+  // realizationData,
 }) => {
   return (
     <StyledCard>
       <StyledImageContainer>
-        <StyledLogo src={logoSrc} alt={`${companyName} logo`} />
+        <StyledLogo src={getImageUrl(logoSrc)} alt={`${companyName} logo`} />
       </StyledImageContainer>
       <StyledContentWrapper>
         <StyledContentContainer>
@@ -40,9 +41,9 @@ export const RealizationCard: React.FC<RealizationCardProps> = ({
             )}
           </StyledDescriptionContentWrapper>
         </StyledContentContainer>
-        <ButtonLink href={pagesPaths.realization} state={realizationData}>
+        {/* <ButtonLink href={pagesPaths.realization} state={realizationData}>
           Więcej
-        </ButtonLink>
+        </ButtonLink> */}
       </StyledContentWrapper>
     </StyledCard>
   );

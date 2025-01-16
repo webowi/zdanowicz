@@ -1,50 +1,25 @@
 import styled from "styled-components";
 import { colors } from "../../../utils/colors";
 import { pagesPaths } from "../../../constans/pagesPaths";
-import { Link } from "react-scroll";
 import { minDeviceSize } from "../../../utils/deviceSize";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
     <StyledFooter>
       <div className="container"></div>
       <StyledNav>
-        <StyledNavPageItem href={pagesPaths.privacyPolicy}>
+        <StyledNavItem to={pagesPaths.privacyPolicy}>
           Polityka prywatności
-        </StyledNavPageItem>
-        <StyledNavItem
-          href="#"
-          to="solutions"
-          spy
-          smooth
-          offset={50}
-          duration={500}
-        >
-          Rozwiązania
         </StyledNavItem>
-        <StyledNavItem
-          href="#"
-          to="solutions"
-          spy
-          smooth
-          offset={50}
-          duration={500}
-        >
-          Realizacje
-        </StyledNavItem>
-        <StyledNavItem
-          href="#"
-          to="contact"
-          spy
-          smooth
-          offset={50}
-          duration={500}
-        >
-          Kontakt
-        </StyledNavItem>
+        <StyledNavItem to={pagesPaths.offer}>Oferta</StyledNavItem>
+        <StyledNavItem to={pagesPaths.realizations}>Realizacje</StyledNavItem>
+        <StyledNavItem to={pagesPaths.machinePark}>Park maszyn</StyledNavItem>
+        <StyledNavItem to={pagesPaths.concretePlant}>Betoniarnia</StyledNavItem>
+        <StyledNavItem to={pagesPaths.contact}>Kontakt</StyledNavItem>
       </StyledNav>
       <StyledCopyrights>
-        &copy; 2024 Webowi.pl - wszelkie prawa zastrzeżone
+        &copy; 2025 Webowi.pl - wszelkie prawa zastrzeżone
       </StyledCopyrights>
     </StyledFooter>
   );
@@ -77,17 +52,6 @@ const StyledNavItem = styled(Link)`
   text-decoration: none;
   color: ${colors.grey};
   font-size: 0.875rem;
-  &:hover {
-    color: ${colors.white};
-  }
-`;
-
-const StyledNavPageItem = styled.a`
-  cursor: pointer;
-  text-decoration: none;
-  color: ${colors.grey};
-  font-size: 0.875rem;
-
   &:hover {
     color: ${colors.white};
   }
