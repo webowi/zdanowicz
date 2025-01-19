@@ -1,60 +1,96 @@
+import React from "react";
 import styled from "styled-components";
 import { colors } from "../../utils/colors";
-import contactBackgrouindImage from "../../assets/contact-section-image.webp";
-import { SectionTitle } from "../../components/atoms/SectionTitle/SectionTitle";
-import { ContactButton } from "../../components/atoms/ContactButton/ContactButton";
-import { IoIosMail } from "react-icons/io";
+import { Button } from "../../components/atoms/Button/Button";
+import { maxDeviceSize } from "../../utils/deviceSize";
 
-export const Contact = () => {
+interface ContactProps {
+  isHighlighted: boolean;
+}
+
+export const Contact: React.FC<ContactProps> = ({ isHighlighted = false }) => {
   return (
-    <StyledSection name="contact">
-      <div className="container">
-        <StyledContent>
-          <SectionTitle>
-            Skontaktuj się z nami, a my pomożemy Ci w stworzeniu strony
-          </SectionTitle>
-          <ContactButton
-            href={`mailto:${import.meta.env.VITE_EMAIL}`}
-            textColor={colors.white}
+    <ContactSection isHighlighted={isHighlighted} id="contact">
+      <ContactContent>
+        <h2>Skontaktuj się z nami</h2>
+        <p>
+          Masz pytania? Chętnie pomożemy! Napisz do nas lub zadzwoń, a nasi
+          specjaliści odpowiedzą na każde Twoje pytanie i pomogą w wyborze
+          najlepszych rozwiązań.
+        </p>
+        <ButtonContainer>
+          <Button href={`mailto:${import.meta.env.VITE_EMAIL}`}>
+            Napisz do nas
+          </Button>
+          <Button
+            href={`mailto:${import.meta.env.VITE_PHONE_NUMBER}`}
+            secondary
           >
-            <IoIosMail
-              style={{
-                marginRight: "0.5rem",
-                width: "1rem",
-                height: "1rem",
-              }}
-            />
-            Skontaktuj się z nami
-          </ContactButton>
-        </StyledContent>
-      </div>
-    </StyledSection>
+            Zadzwoń
+          </Button>
+        </ButtonContainer>
+      </ContactContent>
+    </ContactSection>
   );
 };
 
-const StyledSection = styled.section<{ name: string }>`
-  background: linear-gradient(
-      180deg,
-      #fff 0%,
-      rgba(0, 0, 0, 0.5) 70%,
-      black 100%
-    ),
-    url(${contactBackgrouindImage}) no-repeat center;
-  overflow: hidden;
-  height: 500px;
-  background-size: cover;
-`;
-
-const StyledContent = styled.div`
-  margin-top: 10rem;
-  gap: 1rem;
-  max-width: 540px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
+const ContactSection = styled.section<ContactProps>`
+  background-color: ${({ isHighlighted }) =>
+    isHighlighted ? colors.white : colors.black};
+  color: ${({ isHighlighted }) =>
+    isHighlighted ? colors.black : colors.white};
+  padding: 5rem 2rem;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
+  transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out;
+
+  @media ${maxDeviceSize.phone} {
+    padding: 3rem 1rem;
+  }
+`;
+
+const ContactContent = styled.div`
+  text-align: center;
+  max-width: 800px;
+
+  h2 {
+    font-size: 2.4rem;
+    color: ${colors.yellow};
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: ${colors.grayLight};
+  }
+
+  @media ${maxDeviceSize.phone} {
+    h2 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+
+  @media ${maxDeviceSize.phone} {
+    flex-direction: column;
+    gap: 1rem;
+
+    a {
+      width: 100%;
+      text-align: center;
+    }
+  }
 `;

@@ -1,12 +1,11 @@
 import React from "react";
 import { colors } from "../utils/colors";
 import styled from "styled-components";
-import { BackHeader } from "../components/organisms/BackHeader/BackHeader";
+import { maxDeviceSize } from "../utils/deviceSize";
 
 const PrivacyPolicy: React.FC = () => {
   return (
     <>
-      <BackHeader />
       <StyledSection>
         <div className="container">
           <h1>Polityka Prywatności</h1>
@@ -119,9 +118,9 @@ const PrivacyPolicy: React.FC = () => {
 };
 
 const StyledSection = styled.section`
-  background: linear-gradient(to top, ${colors.white}, #d2dcff);
-  padding: 2rem;
-
+  background-color: ${colors.black};
+  color: ${colors.white};
+  padding: 10rem;
   h1 {
     text-align: center;
     margin-bottom: 2rem;
@@ -138,6 +137,12 @@ const StyledSection = styled.section`
   ul {
     margin-top: 1rem;
     margin-left: 2rem;
+  }
+
+  @media ${maxDeviceSize.phone} {
+    padding: 0;
+    padding-top: 8rem;
+    padding-bottom: 2rem;
   }
 `;
 

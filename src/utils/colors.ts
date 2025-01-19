@@ -1,9 +1,7 @@
 export const colors: Record<string, string> = {
-  lightWhite: "#EAEEFE",
   white: "#FFFFFF",
   black: "#000000",
-  darkBlue: "#001E80",
-  darkBlue2: "#010D3E",
-  grey: "#BCBCBC",
-  lightBlue: "#03a0e3",
+  lightBlack: "#1A1A1A",
+  grey: "#95969C",
+  yellow: "#F9B200",
 };

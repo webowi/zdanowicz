@@ -1,20 +1,17 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { colors } from "../../../utils/colors";
 import { maxDeviceSize } from "../../../utils/deviceSize";
+import LogoImage from "../../../assets/logo.webp";
 import { pagesPaths } from "../../../constans/pagesPaths";
-import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isTop, setIsTop] = useState(true);
-
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,29 +28,31 @@ export const Navbar = () => {
   return (
     <StyledNavbarWrapper $visible={visible} $isTop={isTop}>
       <StyledNavbarContainer>
-        <StyledLogoItem href={pagesPaths.homePage}>Webowi.pl</StyledLogoItem>
-        <StyledNav>
-          <StyledNavItem to={pagesPaths.offer}>Oferta</StyledNavItem>
-          <StyledNavItem to={pagesPaths.realizations}>Realizacje</StyledNavItem>
-          <StyledNavItem to={pagesPaths.machinePark}>Park maszyn</StyledNavItem>
-          <StyledNavItem to={pagesPaths.concretePlant}>
-            Betoniarnia
-          </StyledNavItem>
-          <StyledNavItem to={pagesPaths.contact}>Kontakt</StyledNavItem>
-        </StyledNav>
+        <StyledLogo>
+          <Link to={pagesPaths.homePage}>
+            <img src={LogoImage} alt="Logo NextBud" />
+          </Link>
+        </StyledLogo>
+        <StyledNavSection>
+          <StyledLink to={pagesPaths.offer}>Oferta</StyledLink>
+          <StyledLink to={pagesPaths.realizations}>Realizacje</StyledLink>
+          <StyledLink to={pagesPaths.machinePark}>Park maszynowy</StyledLink>
+          <StyledLink to={pagesPaths.concretePlant}>Betoniarnia</StyledLink>
+          <StyledSignificantLink to={pagesPaths.contact}>
+            Kontakt
+          </StyledSignificantLink>
+        </StyledNavSection>
         <StyledToggleButton onClick={() => setMenuOpen(!menuOpen)}>
-          {menuOpen ? <FaTimes /> : <FaBars style={{ color: colors.black }} />}
+          {menuOpen ? <FaTimes /> : <FaBars style={{ color: colors.white }} />}
         </StyledToggleButton>
       </StyledNavbarContainer>
       <StyledMobileMenu $menuOpen={menuOpen} onClick={() => setMenuOpen(false)}>
         {menuOpen && <MobileMenuHeader>MENU</MobileMenuHeader>}
-        <MobileMenuItem to={pagesPaths.offer} onClick={closeMenu}>
-          Rozwiązania
-        </MobileMenuItem>
-        <MobileMenuItem to={pagesPaths.realizations}>Realizacje</MobileMenuItem>
         <MobileMenuItem to={pagesPaths.offer}>Oferta</MobileMenuItem>
         <MobileMenuItem to={pagesPaths.realizations}>Realizacje</MobileMenuItem>
-        <MobileMenuItem to={pagesPaths.machinePark}>Park maszyn</MobileMenuItem>
+        <MobileMenuItem to={pagesPaths.machinePark}>
+          Park maszynowy
+        </MobileMenuItem>
         <MobileMenuItem to={pagesPaths.concretePlant}>
           Betoniarnia
         </MobileMenuItem>
@@ -64,57 +63,73 @@ export const Navbar = () => {
 };
 
 const StyledNavbarWrapper = styled.div<{ $visible: boolean; $isTop: boolean }>`
+  position: fixed;
   top: ${({ $visible }) => ($visible ? "0" : "-150px")};
   width: 100%;
   z-index: 1010;
-  background-color: transparent;
-  backdrop-filter: blur(10px);
+  background-color: ${({ $isTop }) => ($isTop ? "transparent" : colors.black)};
   transition: top 0.5s ease, background-color 0.3s ease;
-  padding: 1.25rem;
 `;
 
 const StyledNavbarContainer = styled.nav`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px 20px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+
+  @media ${maxDeviceSize.tablet} {
+    padding: 10px;
+  }
 `;
 
-const StyledNav = styled.nav`
+const StyledNavSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
   @media ${maxDeviceSize.tablet} {
     display: none;
   }
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.25rem;
 `;
 
-const StyledNavItem = styled(Link)`
-  cursor: pointer;
-  text-decoration: none;
-  color: rgba(0, 0, 0, 0.6);
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  transition: 0.3s;
-  letter-spacing: -0.025rem;
+const StyledLogo = styled.div`
+  flex-grow: 1;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: left;
 
-  &:hover {
-    color: ${colors.black};
+  img {
+    width: 50%;
+
+    @media ${maxDeviceSize.phone} {
+      width: 75%;
+    }
   }
 `;
 
-const StyledLogoItem = styled.a`
-  cursor: pointer;
+const StyledLink = styled(Link)`
   text-decoration: none;
-  color: ${colors.black};
-  font-size: 1.25rem;
-  font-weight: bold;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  transition: 0.3s;
+  color: ${colors.grey};
+  transition: color 0.3s ease;
+  font-size: 1.1rem;
 
   &:hover {
-    color: ${colors.black};
+    color: ${colors.white};
+  }
+`;
+
+const StyledSignificantLink = styled(Link)`
+  text-decoration: none;
+  color: ${colors.grey};
+  transition: color 0.3s ease;
+  font-size: 1.1rem;
+  border: 1px solid ${colors.grey};
+  padding: 1rem;
+  border-radius: 5px;
+
+  &:hover {
+    color: ${colors.white};
+    border: 1px solid ${colors.yellow};
   }
 `;
 
@@ -125,7 +140,8 @@ const StyledToggleButton = styled.div`
   z-index: 9999;
 
   @media ${maxDeviceSize.tablet} {
-    display: block;
+    display: flex;
+    align-items: center;
     color: ${colors.white};
     transition: color 0.3s ease;
   }

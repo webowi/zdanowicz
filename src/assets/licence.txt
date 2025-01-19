@@ -1,2 +1,6 @@
-ContactSection: https://www.pexels.com/pl-pl/zdjecie/kobieta-kawa-relaks-laptop-4050291/
-Hero and Product showcase: https://pixabay.com/pl/vectors/social-social-media-internet-371648/
+Hero: https://www.pexels.com/pl-pl/video/abstrakcyjny-ogien-bialy-palic-9694806/
+AboutUs: https://www.pexels.com/pl-pl/zdjecie/praca-mezczyzni-przemysl-na-stojaco-4483772/
+offer/building: https://www.pexels.com/pl-pl/zdjecie/cement-do-fotografii-selektywnej-ostrosci-2219024/
+offer/road: https://www.pexels.com/pl-pl/zdjecie/ladowarka-czolowa-obok-bialej-wywrotki-188679/
+offer/excavation: https://www.pexels.com/pl-pl/zdjecie/pole-maszyna-ziemia-brud-25559747/
+offer/demolition: https://www.pexels.com/pl-pl/zdjecie/droga-ulica-budynki-budowa-11554264/

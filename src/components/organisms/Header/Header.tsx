@@ -9,9 +9,9 @@ export const Header = () => (
 );
 
 const StyledHeader = styled.header`
-  top: 0;
-  background: linear-gradient(to bottom, ${colors.white}, #d2dcff);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: ${colors.black};
+  color: ${colors.white};
 `;

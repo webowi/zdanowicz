@@ -1,25 +1,218 @@
 import styled from "styled-components";
 import { colors } from "../../utils/colors";
-import { minDeviceSize } from "../../utils/deviceSize";
+import { maxDeviceSize } from "../../utils/deviceSize";
+import HeroVideoBackground from "../../assets/HeroSmoke.mp4";
+import HeroPosterVideoBackground from "../../assets/heroSmokePoster.webp";
+import { motion } from "motion/react";
+import { pagesPaths } from "../../constans/pagesPaths";
+import { TypeAnimation } from "react-type-animation";
+import { Button } from "../../components/atoms/Button/Button";
 
 export const Hero = () => {
   return (
     <StyledSection>
-      <div className="container">Hero</div>
+      <StyledVideoBackground
+        src={HeroVideoBackground}
+        poster={HeroPosterVideoBackground}
+        muted
+        autoPlay
+        loop
+        playsInline
+        aria-describedby="video-description"
+      />
+      <VisuallyHidden id="video-description">
+        Wideo przedstawiające czarne tło z tesktrurą kropek.
+      </VisuallyHidden>
+      <StyledContentContainer>
+        <StyledParagraphTop
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          Ne<StyledX>x</StyledX>tbud
+        </StyledParagraphTop>
+        <StyledText
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1.2 }}
+        >
+          Od fundamentów po dach
+        </StyledText>
+
+        <StyledSubTextContainer
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1.5 }}
+        >
+          <StyledTyped
+            preRenderFirstString={true}
+            sequence={[
+              "Obsługujemy inwestycje kompleksowo: usługi sprzętowe",
+              "Obsługujemy inwestycje kompleksowo: betoniarnia",
+              "Obsługujemy inwestycje kompleksowo: hurtownia materiałów budowlanych",
+              "Obsługujemy inwestycje kompleksowo: park maszyn",
+            ]}
+            speed={20}
+            repeat={Infinity}
+          />
+        </StyledSubTextContainer>
+        <StyledButtonsWrapper
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1.8 }}
+        >
+          <Button href={pagesPaths.offer}>Zobacz ofertę</Button>
+          <Button href={pagesPaths.contact} secondary={true}>
+            Skontaktuj się z nami
+          </Button>
+        </StyledButtonsWrapper>
+      </StyledContentContainer>
     </StyledSection>
   );
 };
 
 const StyledSection = styled.section`
-  padding-left: 2rem;
-  padding-right: 2rem;
-  padding-top: 2rem;
-  padding-bottom: 5rem;
-  background: linear-gradient(to top, ${colors.white}, #d2dcff);
-  overflow-x: clip;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: ${colors.black};
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  @media ${minDeviceSize.tablet} {
-    padding-top: 1.25rem;
-    padding-bottom: 2.5rem;
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 60%,
+      rgba(0, 0, 0, 1)
+    );
+    z-index: 1;
+  }
+`;
+
+const StyledVideoBackground = styled.video`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(50%);
+`;
+
+const VisuallyHidden = styled.div`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+`;
+
+const StyledContentContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: ${colors.white};
+  font-size: 1.8rem;
+  z-index: 1000;
+  padding: 10rem;
+
+  @media ${maxDeviceSize.tablet} {
+    padding: 4rem;
+  }
+
+  @media ${maxDeviceSize.phone} {
+    width: auto;
+    height: auto;
+    bottom: 0;
+    padding: 1rem 1rem 7rem;
+  }
+`;
+
+const StyledParagraphTop = styled(motion.p)`
+  text-transform: uppercase;
+  color: ${colors.grey};
+  font-weight: bold;
+  padding: 0.5rem;
+  text-align: center;
+  letter-spacing: 0.2rem;
+`;
+
+const StyledX = styled.span`
+  color: ${colors.yellow};
+`;
+
+const StyledText = styled(motion.p)`
+  margin: 0;
+  font-size: 3rem;
+  text-align: center;
+
+  @media ${maxDeviceSize.smallScreen} {
+    font-size: 2.5rem;
+  }
+
+  @media ${maxDeviceSize.verySmallScreen} {
+    font-size: 2.2rem;
+  }
+
+  @media ${maxDeviceSize.tablet} {
+    font-size: 2rem;
+  }
+`;
+
+const StyledTyped = styled(TypeAnimation)`
+  font-size: 1.5rem;
+  text-align: center;
+
+  @media ${maxDeviceSize.smallScreen} {
+    font-size: 1.2rem;
+  }
+
+  @media ${maxDeviceSize.verySmallScreen} {
+    font-size: 1.1rem;
+  }
+
+  @media ${maxDeviceSize.tablet} {
+    font-size: 1rem;
+  }
+`;
+
+const StyledSubTextContainer = styled(motion.p)`
+  margin: 0.5rem 0 2rem;
+  font-size: 1.5rem;
+  text-align: center;
+
+  @media ${maxDeviceSize.smallScreen} {
+    font-size: 1.2rem;
+  }
+
+  @media ${maxDeviceSize.verySmallScreen} {
+    font-size: 1.1rem;
+  }
+
+  @media ${maxDeviceSize.tablet} {
+    font-size: 1rem;
+  }
+`;
+
+const StyledButtonsWrapper = styled(motion.div)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media ${maxDeviceSize.phone} {
+    flex-direction: column;
   }
 `;
