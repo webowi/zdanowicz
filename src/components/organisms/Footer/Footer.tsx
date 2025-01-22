@@ -30,6 +30,7 @@ const StyledFooter = styled.footer`
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
   text-align: center;
+  border-top: 1px solid ${colors.grey};
 `;
 
 const StyledNav = styled.nav`

@@ -1,11 +1,15 @@
 import RequestApiBuilder from "./RequestApiBuilder";
 
+interface RealizationImage {
+  image: string;
+}
+
 interface Realization {
   uuid: string;
   name: string;
   description?: string;
   mainImage: string;
-  images: string[];
+  images: RealizationImage[];
 }
 
 interface RealizationApiResponse {
@@ -24,5 +28,43 @@ export const getRealizations = async (
   }
 
   const response = await api.get<RealizationApiResponse>();
+  return response.data["hydra:member"];
+};
+
+interface Machine {
+  uuid: string;
+  name: string;
+  description?: string;
+  mainImage: string;
+}
+
+interface MachineApiResponse {
+  "hydra:member": Machine[];
+  [key: string]: any;
+}
+
+export const getMachines = async (): Promise<Machine[]> => {
+  const api = new RequestApiBuilder().setResource("machines");
+
+  const response = await api.get<MachineApiResponse>();
+  return response.data["hydra:member"];
+};
+
+interface ConcretePlant {
+  uuid: string;
+  name: string;
+  description?: string;
+  mainImage: string;
+}
+
+interface ConcretePlantApiResponse {
+  "hydra:member": ConcretePlant[];
+  [key: string]: any;
+}
+
+export const getConcretePlants = async (): Promise<ConcretePlant[]> => {
+  const api = new RequestApiBuilder().setResource("concrete-plants");
+
+  const response = await api.get<ConcretePlantApiResponse>();
   return response.data["hydra:member"];
 };

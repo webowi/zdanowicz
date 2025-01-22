@@ -7,22 +7,16 @@ import { motion } from "motion/react";
 import { pagesPaths } from "../../constans/pagesPaths";
 import { TypeAnimation } from "react-type-animation";
 import { Button } from "../../components/atoms/Button/Button";
+import { BackgroundVideo } from "../../components/atoms/BackgroundVideo/BackgroundVideo";
 
 export const Hero = () => {
   return (
     <StyledSection>
-      <StyledVideoBackground
+      <BackgroundVideo
         src={HeroVideoBackground}
         poster={HeroPosterVideoBackground}
-        muted
-        autoPlay
-        loop
-        playsInline
-        aria-describedby="video-description"
+        videoDescription="Wideo przedstawiające czarne tło z tesktrurą kropek."
       />
-      <VisuallyHidden id="video-description">
-        Wideo przedstawiające czarne tło z tesktrurą kropek.
-      </VisuallyHidden>
       <StyledContentContainer>
         <StyledParagraphTop
           initial={{ y: 50, opacity: 0 }}
@@ -95,25 +89,6 @@ const StyledSection = styled.section`
     );
     z-index: 1;
   }
-`;
-
-const StyledVideoBackground = styled.video`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(50%);
-`;
-
-const VisuallyHidden = styled.div`
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
 `;
 
 const StyledContentContainer = styled.div`

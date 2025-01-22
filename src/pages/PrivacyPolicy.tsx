@@ -2,10 +2,11 @@ import React from "react";
 import { colors } from "../utils/colors";
 import styled from "styled-components";
 import { maxDeviceSize } from "../utils/deviceSize";
+import MainLayout from "../layouts/MainLayout";
 
 const PrivacyPolicy: React.FC = () => {
   return (
-    <>
+    <MainLayout>
       <StyledSection>
         <div className="container">
           <h1>Polityka Prywatności</h1>
@@ -113,7 +114,7 @@ const PrivacyPolicy: React.FC = () => {
           </p>
         </div>
       </StyledSection>
-    </>
+    </MainLayout>
   );
 };
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { colors } from "../../../utils/colors";
 import { maxDeviceSize } from "../../../utils/deviceSize";
@@ -29,9 +29,9 @@ export const Navbar = () => {
     <StyledNavbarWrapper $visible={visible} $isTop={isTop}>
       <StyledNavbarContainer>
         <StyledLogo>
-          <Link to={pagesPaths.homePage}>
+          <NavLink to={pagesPaths.homePage}>
             <img src={LogoImage} alt="Logo NextBud" />
-          </Link>
+          </NavLink>
         </StyledLogo>
         <StyledNavSection>
           <StyledLink to={pagesPaths.offer}>Oferta</StyledLink>
@@ -107,7 +107,7 @@ const StyledLogo = styled.div`
   }
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(NavLink)`
   text-decoration: none;
   color: ${colors.grey};
   transition: color 0.3s ease;
@@ -116,9 +116,13 @@ const StyledLink = styled(Link)`
   &:hover {
     color: ${colors.white};
   }
+
+  &.active {
+    color: ${colors.white};
+  }
 `;
 
-const StyledSignificantLink = styled(Link)`
+const StyledSignificantLink = styled(NavLink)`
   text-decoration: none;
   color: ${colors.grey};
   transition: color 0.3s ease;
@@ -130,6 +134,11 @@ const StyledSignificantLink = styled(Link)`
   &:hover {
     color: ${colors.white};
     border: 1px solid ${colors.yellow};
+  }
+
+  &.active {
+    color: ${colors.white};
+    border: 1px solid ${colors.whit};
   }
 `;
 
@@ -173,7 +182,7 @@ const MobileMenuHeader = styled.div`
   color: ${colors.white};
 `;
 
-const MobileMenuItem = styled(Link)`
+const MobileMenuItem = styled(NavLink)`
   color: ${colors.white};
   text-decoration: none;
   font-size: 1.2rem;

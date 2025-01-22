@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { colors } from "../utils/colors";
-import BuildingImage from "../../assets/building.jpg";
-import RoadImage from "../../assets/road.jpg";
-import ExcavationImage from "../../assets/excavation.jpg";
-import DemolitionImage from "../../assets/demolition.jpg";
+import BuildingImage from "../assets/building.webp";
+import RoadImage from "../assets/road.webp";
+import ExcavationImage from "../assets/excavation.webp";
+import DemolitionImage from "../assets/demolation.webp";
+import MainLayout from "../layouts/MainLayout";
+import { Image } from "../components/atoms/Image/Image";
+import { maxDeviceSize } from "../utils/deviceSize";
 
 const offerData = [
   {
@@ -37,23 +40,40 @@ const offerData = [
   },
 ];
 
-export const Offer: React.FC = () => {
+const OfferPage: React.FC = () => {
   return (
-    <OfferSection>
-      {offerData.map((item, index) => (
-        <OfferItem key={index} isImageLeft={item.isImageLeft}>
-          <ImageContainer>
-            <Image src={item.image} alt={item.title} />
-          </ImageContainer>
-          <TextContainer>
-            <h3>{item.title}</h3>
-            <p>{item.description}</p>
-          </TextContainer>
-        </OfferItem>
-      ))}
-    </OfferSection>
+    <MainLayout>
+      <OfferHeader>
+        <PageTitle>Nasza oferta</PageTitle>
+      </OfferHeader>
+      <OfferSection>
+        {offerData.map((item, index) => (
+          <OfferItem key={index} isImageLeft={item.isImageLeft}>
+            <ImageContainer>
+              <Image loading="eager" src={item.image} alt={item.title} />
+            </ImageContainer>
+            <TextContainer>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </TextContainer>
+          </OfferItem>
+        ))}
+      </OfferSection>
+    </MainLayout>
   );
 };
+
+const OfferHeader = styled.div`
+  width: 100%;
+  text-align: center;
+  background: ${colors.black};
+  padding-top: 10rem;
+`;
+
+const PageTitle = styled.h1`
+  font-size: 3rem;
+  color: ${colors.yellow};
+`;
 
 const OfferSection = styled.div`
   display: flex;
@@ -61,7 +81,7 @@ const OfferSection = styled.div`
   align-items: center;
   width: 100%;
   padding: 3rem 0;
-  background-color: ${colors.black};
+  background: ${colors.black};
 `;
 
 const OfferItem = styled.div<{ isImageLeft: boolean }>`
@@ -69,15 +89,15 @@ const OfferItem = styled.div<{ isImageLeft: boolean }>`
   flex-direction: ${({ isImageLeft }) => (isImageLeft ? "row" : "row-reverse")};
   align-items: center;
   justify-content: center;
-  gap: 2rem;
-  padding: 3rem 1rem;
+  padding: 5rem;
   width: 100%;
+  background: ${({ isImageLeft }) =>
+    !isImageLeft
+      ? `linear-gradient(to bottom, ${colors.black}, ${colors.lightBlack} 10%, ${colors.lightBlack} 90%, ${colors.black})`
+      : "none"};
 
-  &:nth-child(even) {
-    background-color: ${colors.lightBlack};
-  }
-
-  @media (max-width: 768px) {
+  @media ${maxDeviceSize.phone} {
+    padding: 3rem 1rem;
     flex-direction: column;
     text-align: center;
   }
@@ -90,17 +110,12 @@ const ImageContainer = styled.div`
   align-items: center;
 `;
 
-const Image = styled.img`
-  width: 100%;
-  max-width: 500px;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-`;
-
 const TextContainer = styled.div`
   flex: 1;
   color: ${colors.white};
   text-align: left;
+  max-width: 800px;
+  margin-left: 2rem;
 
   h3 {
     font-size: 2rem;
@@ -114,7 +129,17 @@ const TextContainer = styled.div`
     color: ${colors.grayLight};
   }
 
-  @media (max-width: 768px) {
+  @media ${maxDeviceSize.tablet} {
     text-align: center;
+    padding: 2rem;
+    margin-left: 0;
+  }
+
+  @media ${maxDeviceSize.phone} {
+    text-align: center;
+    padding-top: 2rem;
+    margin-left: 0;
   }
 `;
+
+export default OfferPage;

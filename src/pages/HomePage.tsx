@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { Footer } from "../components/organisms/Footer/Footer";
 import { Contact } from "../sections/Contact/Contact";
 import { Hero } from "../sections/Hero/Hero";
 import { AboutUs } from "../sections/AboutUs/AboutUs";
 import { AboutUsDetail } from "../sections/AboutUsDetail/AboutUsDetail";
-import { ScrollToTopButton } from "../components/atoms/ScrollToTopButton/ScrollToTopButton";
 import { WhyUs } from "../sections/WhyUs/WhyUs";
+import MainLayout from "../layouts/MainLayout";
 
 const HomePage = () => {
   const [isContactVisible, setIsContactVisible] = useState(false);
@@ -27,15 +26,13 @@ const HomePage = () => {
   }, []);
 
   return (
-    <>
+    <MainLayout>
       <Hero />
       <AboutUs />
       <WhyUs />
       <AboutUsDetail isHighlighted={isContactVisible} />
       <Contact isHighlighted={isContactVisible} />
-      <ScrollToTopButton />
-      <Footer />
-    </>
+    </MainLayout>
   );
 };
 

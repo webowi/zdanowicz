@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { maxDeviceSize } from "../../utils/deviceSize";
 import { colors } from "../../utils/colors";
 import WarehouseImage from "../../assets/warehouse.webp";
+import { Image } from "../../components/atoms/Image/Image";
 
 export const AboutUs = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -59,7 +60,7 @@ export const AboutUs = () => {
         </StyledDescription>
       </StyledContent>
       <StyledImageContainer>
-        <StyledImage src={WarehouseImage} alt="Magazyn" />
+        <Image src={WarehouseImage} alt="Magazyn" />
       </StyledImageContainer>
     </StyledAboutWrapper>
   );
@@ -78,7 +79,7 @@ const StyledAboutWrapper = styled.section`
 
   @media ${maxDeviceSize.tablet} {
     flex-direction: column;
-    padding: 2rem;
+    padding: 5rem;
   }
 `;
 
@@ -134,16 +135,5 @@ const StyledImageContainer = styled.div`
 
   @media ${maxDeviceSize.tablet} {
     display: none;
-  }
-`;
-
-const StyledImage = styled.img`
-  width: 60%;
-  height: auto;
-  object-fit: cover;
-  box-shadow: 0px 1px 18px 1px rgba(249, 178, 0, 1);
-  border-radius: 8px;
-  @media ${maxDeviceSize.tablet} {
-    width: 100%;
   }
 `;
