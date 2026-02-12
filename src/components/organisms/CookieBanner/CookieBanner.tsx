@@ -6,6 +6,8 @@ import {
   getCookiesConsent,
   setCookiesConsent,
 } from "../../../utils/cookies/cookiesConsent";
+import { Link } from "react-router-dom";
+import { pagesPaths } from "../../../constans/pagesPaths";
 
 type Props = {
   privacyPolicyPath?: string;
@@ -58,7 +60,7 @@ export const CookieBanner: React.FC<Props> = ({
               <MoreText>
                 Nie używamy cookies analitycznych ani marketingowych (np. do
                 śledzenia reklam). Szczegóły znajdziesz w{" "}
-                <a href={privacyPolicyPath}>Polityce Prywatności</a>.
+                <Link to={pagesPaths.privacyPolicy}>Polityce Prywatności</Link>.
               </MoreText>
             </More>
           )}
