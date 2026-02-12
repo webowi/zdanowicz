@@ -63,8 +63,8 @@ export const Hero = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1.8 }}
         >
-          <Button href={pagesPaths.offer}>Zobacz ofertę</Button>
-          <Button href={pagesPaths.contact} secondary={true}>
+          <Button to={pagesPaths.offer}>Zobacz ofertę</Button>
+          <Button to={pagesPaths.contact} secondary={true}>
             Skontaktuj się z nami
           </Button>
         </StyledButtonsWrapper>
