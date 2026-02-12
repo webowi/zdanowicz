@@ -23,14 +23,21 @@ export const Hero = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1 }}
         >
-          Ne<StyledX>x</StyledX>tbud
+          ZD<StyledX>A</StyledX>NOWICZ
         </StyledParagraphTop>
         <StyledText
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1.2 }}
         >
-          Od fundamentów po dach
+          Usługi ogólnobudowlane
+        </StyledText>
+        <StyledText
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1.2 }}
+        >
+          Kompleksowa realizacja. Pełny nadzór. Spokojna głowa.
         </StyledText>
 
         <StyledSubTextContainer
@@ -41,10 +48,11 @@ export const Hero = () => {
           <StyledTyped
             preRenderFirstString={true}
             sequence={[
-              "Obsługujemy inwestycje kompleksowo: usługi sprzętowe",
-              "Obsługujemy inwestycje kompleksowo: betoniarnia",
-              "Obsługujemy inwestycje kompleksowo: hurtownia materiałów budowlanych",
-              "Obsługujemy inwestycje kompleksowo: park maszyn",
+              "Wykonujemy m.in: roboty żelbetowe",
+              "Wykonujemy m.in: roboty murarskie",
+              "Wykonujemy m.in: roboty elewacyjne",
+              "Wykonujemy m.in: roboty wykończeniowe",
+              "Wykonujemy m.in: świadectwo charakterystyki energetycznej",
             ]}
             speed={20}
             repeat={Infinity}
@@ -119,14 +127,15 @@ const StyledContentContainer = styled.div`
 const StyledParagraphTop = styled(motion.p)`
   text-transform: uppercase;
   color: ${colors.grey};
-  font-weight: bold;
+  font-weight: 200;
+  font-size: 3rem;
   padding: 0.5rem;
   text-align: center;
-  letter-spacing: 0.2rem;
+  letter-spacing: 0.5rem;
 `;
 
 const StyledX = styled.span`
-  color: ${colors.yellow};
+  color: ${colors.orange};
 `;
 
 const StyledText = styled(motion.p)`

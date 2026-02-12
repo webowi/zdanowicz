@@ -1,248 +1,265 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { colors } from "../../../utils/colors";
+import { maxDeviceSize } from "../../../utils/deviceSize";
+import {
+  getCookiesConsent,
+  setCookiesConsent,
+} from "../../../utils/cookies/cookiesConsent";
 
-type CookiePreferences = {
-  //   necessary: boolean;
-  analytics: boolean;
-  //   marketing: boolean;
+type Props = {
+  privacyPolicyPath?: string;
 };
 
-type CookieDetails = {
-  [key in keyof CookiePreferences]: boolean;
-};
+export const CookieBanner: React.FC<Props> = ({
+  privacyPolicyPath = "/polityka-prywatnosci",
+}) => {
+  const [visible, setVisible] = useState(() => !getCookiesConsent());
+  const [expanded, setExpanded] = useState(false);
 
-const CookiesBanner: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [preferences, setPreferences] = useState<CookiePreferences>({
-    // necessary: true,
-    analytics: true,
-    // marketing: false,
-  });
-  const [detailsVisible, setDetailsVisible] = useState<CookieDetails>({
-    // necessary: false,
-    analytics: false,
-    // marketing: false,
-  });
-
-  useEffect(() => {
-    const savedPreferences = localStorage.getItem("cookiesPreferences");
-    if (!savedPreferences) {
-      setIsVisible(true);
-    }
-  }, []);
-
-  const handleAcceptAll = () => {
-    const allPreferences: CookiePreferences = {
-      //   necessary: true,
-      analytics: true,
-      //   marketing: true,
-    };
-    localStorage.setItem("cookiesPreferences", JSON.stringify(allPreferences));
-    setPreferences(allPreferences);
-    setIsVisible(false);
+  const understand = () => {
+    setCookiesConsent(true);
+    setExpanded(false);
+    setVisible(false);
   };
 
-  const handleSavePreferences = () => {
-    localStorage.setItem("cookiesPreferences", JSON.stringify(preferences));
-    setIsVisible(false);
-  };
-
-  const handlePreferenceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    setPreferences((prev) => ({
-      ...prev,
-      [name]: checked,
-    }));
-  };
-
-  const toggleDetails = (category: keyof CookiePreferences) => {
-    setDetailsVisible((prev) => ({
-      ...prev,
-      [category]: !prev[category],
-    }));
-  };
+  if (!visible) return null;
 
   return (
-    isVisible && (
-      <BannerWrapper>
-        <BannerContent>
-          <BannerMessage>
-            Używamy plików cookies, aby poprawić doświadczenia użytkownika,
-            analizować ruch na stronie i personalizować treści. Możesz
-            dostosować swoje preferencje lub zaakceptować wszystkie.
-          </BannerMessage>
-          <Preferences>
-            {/* <Preference>
-              <label>
-                <input type="checkbox" checked disabled />
-                Niezbędne (zawsze włączone)
-              </label>
-              <DetailsButton onClick={() => toggleDetails("necessary")}>
-                Szczegóły
-              </DetailsButton>
-              {detailsVisible.necessary && (
-                <Details>
-                  <p>Brak plików cookie do wyświetlenia.</p>
-                </Details>
-              )}
-            </Preference> */}
-            <Preference>
-              <label>
-                <input
-                  type="checkbox"
-                  name="analytics"
-                  checked={preferences.analytics}
-                  onChange={handlePreferenceChange}
-                />
-                Analityczne
-              </label>
-              <DetailsButton onClick={() => toggleDetails("analytics")}>
-                Szczegóły
-              </DetailsButton>
-              {detailsVisible.analytics && (
-                <Details>
-                  <p>
-                    <strong>Plik cookie:</strong> _ga_* <br />
-                    <strong>Czas trwania:</strong> 1 rok 1 miesiąc 4 dni <br />
-                    <strong>Opis:</strong> Google Analytics sets this cookie to
-                    store and count page views.
-                  </p>
-                  <p>
-                    <strong>Plik cookie:</strong> _ga <br />
-                    <strong>Czas trwania:</strong> 1 rok 1 miesiąc 4 dni <br />
-                    <strong>Opis:</strong> Google Analytics ustawia ten plik
-                    cookie, aby zebrać dane dotyczące odwiedzających, sesji i
-                    kampanii oraz śledzić korzystanie przez użytkowników z
-                    witryny na potrzeby raportu analitycznego. Plik cookie
-                    przechowuje informacje w sposób zanonimizowany i przydziela
-                    użytkownikom losowo wygenerowany numer w celu identyfikacji
-                    odwiedzających.
-                  </p>
-                </Details>
-              )}
-            </Preference>
-            {/* <Preference>
-              <label>
-                <input
-                  type="checkbox"
-                  name="marketing"
-                  checked={preferences.marketing}
-                  onChange={handlePreferenceChange}
-                />
-                Marketingowe
-              </label>
-              <DetailsButton onClick={() => toggleDetails("marketing")}>
-                Szczegóły
-              </DetailsButton>
-              {detailsVisible.marketing && (
-                <Details>
-                  <p>Brak plików cookie do wyświetlenia.</p>
-                </Details>
-              )}
-            </Preference> */}
-          </Preferences>
-          <Buttons>
-            <AcceptButton onClick={handleAcceptAll}>
-              Zaakceptuj wszystkie
-            </AcceptButton>
-            <SaveButton onClick={handleSavePreferences}>
-              Zapisz preferencje
-            </SaveButton>
-          </Buttons>
-        </BannerContent>
-      </BannerWrapper>
-    )
+    <>
+      <Wrap
+        role="dialog"
+        aria-live="polite"
+        aria-label="Informacja o plikach cookies"
+      >
+        <Header>
+          <Badge>Cookies</Badge>
+          <Title>Dbamy o Twoją prywatność</Title>
+        </Header>
+
+        <Body>
+          <Text>
+            Ta strona używa{" "}
+            <strong>wyłącznie niezbędnych plików cookies</strong>, aby działała
+            poprawnie i bezpiecznie (np. stabilność działania, ochrona przed
+            nadużyciami).
+          </Text>
+
+          {expanded && (
+            <More>
+              <MoreTitle>Co to znaczy „niezbędne”?</MoreTitle>
+              <List>
+                <li>utrzymanie poprawnego działania serwisu,</li>
+                <li>podstawowe zabezpieczenia techniczne,</li>
+                <li>
+                  zapamiętanie Twojej decyzji o wyświetlaniu tego komunikatu.
+                </li>
+              </List>
+              <MoreText>
+                Nie używamy cookies analitycznych ani marketingowych (np. do
+                śledzenia reklam). Szczegóły znajdziesz w{" "}
+                <a href={privacyPolicyPath}>Polityce Prywatności</a>.
+              </MoreText>
+            </More>
+          )}
+
+          <Actions>
+            <LinkBtn type="button" onClick={() => setExpanded((v) => !v)}>
+              {expanded ? "Zwiń" : "Dowiedz się więcej"}
+            </LinkBtn>
+
+            <RightActions>
+              <GhostLink href={privacyPolicyPath}>
+                Polityka prywatności
+              </GhostLink>
+              <PrimaryBtn type="button" onClick={understand}>
+                Rozumiem
+              </PrimaryBtn>
+            </RightActions>
+          </Actions>
+        </Body>
+      </Wrap>
+
+      <MobileSafeArea />
+    </>
   );
 };
 
-const BannerWrapper = styled.div`
+const Wrap = styled.div`
   position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #2c2c2c;
-  color: #fff;
-  padding: 1rem 2rem;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-`;
+  z-index: 9999;
+  left: 1.5rem;
+  right: 1.5rem;
+  bottom: 1.5rem;
 
-const BannerContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-`;
+  max-width: 980px;
+  margin: 0 auto;
 
-const BannerMessage = styled.p`
-  margin-bottom: 1rem;
-`;
+  background: rgba(0, 0, 0, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 1.25rem 1.25rem 1.1rem;
 
-const Preferences = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-`;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
 
-const Preference = styled.div`
-  label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
+  @media ${maxDeviceSize.phone} {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
   }
 `;
 
-const DetailsButton = styled.button`
-  background: none;
-  border: none;
-  color: #007bff;
-  cursor: pointer;
-  font-size: 0.9rem;
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+`;
 
-  &:hover {
+const Badge = styled.span`
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: ${colors.white};
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+`;
+
+const Title = styled.p`
+  margin: 0;
+  color: ${colors.yellow};
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+`;
+
+const Body = styled.div``;
+
+const Text = styled.p`
+  margin: 0;
+  color: ${colors.grayLight};
+  line-height: 1.65;
+  font-size: 1.05rem;
+
+  strong {
+    color: ${colors.white};
+    font-weight: 700;
+  }
+
+  @media ${maxDeviceSize.phone} {
+    font-size: 1rem;
+  }
+`;
+
+const More = styled.div`
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+`;
+
+const MoreTitle = styled.p`
+  margin: 0 0 0.6rem;
+  color: ${colors.white};
+  font-weight: 700;
+`;
+
+const List = styled.ul`
+  margin: 0 0 0.8rem;
+  padding-left: 1.2rem;
+
+  li {
+    color: ${colors.grayLight};
+    line-height: 1.65;
+    margin-bottom: 0.35rem;
+  }
+`;
+
+const MoreText = styled.p`
+  margin: 0;
+  color: ${colors.grayLight};
+  line-height: 1.65;
+
+  a {
+    color: ${colors.yellow};
+    text-decoration: none;
+  }
+  a:hover {
     text-decoration: underline;
   }
 `;
 
-const Details = styled.div`
-  background-color: #444;
-  padding: 0.5rem;
-  border-radius: 5px;
-  margin-top: 0.5rem;
-  font-size: 0.8rem;
-`;
-
-const Buttons = styled.div`
+const Actions = styled.div`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   gap: 1rem;
-`;
+  margin-top: 1.1rem;
 
-const AcceptButton = styled.button`
-  background-color: #28a745;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #218838;
+  @media ${maxDeviceSize.phone} {
+    flex-direction: column;
+    align-items: stretch;
   }
 `;
 
-const SaveButton = styled.button`
-  background-color: #007bff;
-  color: #fff;
+const LinkBtn = styled.button`
+  background: transparent;
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
+  padding: 0;
   cursor: pointer;
+  color: ${colors.grayLight};
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-align: left;
 
   &:hover {
-    background-color: #0056b3;
+    color: ${colors.white};
   }
 `;
 
-export default CookiesBanner;
+const RightActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+
+  @media ${maxDeviceSize.phone} {
+    justify-content: space-between;
+  }
+`;
+
+const GhostLink = styled.a`
+  color: ${colors.grayLight};
+  text-decoration: none;
+  font-weight: 700;
+
+  &:hover {
+    color: ${colors.white};
+    text-decoration: underline;
+  }
+`;
+
+const PrimaryBtn = styled.button`
+  border: none;
+  cursor: pointer;
+  border-radius: 14px;
+  padding: 0.85rem 1.1rem;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+
+  background: ${colors.yellow};
+  color: ${colors.black};
+
+  &:active {
+    transform: translateY(1px);
+  }
+`;
+
+const MobileSafeArea = styled.div`
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: env(safe-area-inset-bottom);
+  pointer-events: none;
+`;

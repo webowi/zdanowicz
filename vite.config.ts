@@ -9,8 +9,8 @@ export default defineConfig({
     react(),
     VitePWA({
       manifest: {
-        name: "Nextbud",
-        short_name: "Nextbud - hurtownia materiałów budowlanych.",
+        name: "Zdanowicz - Usługi ogólnobudowlane",
+        short_name: "Zdanowicz - Usługi ogólnobudowlane",
         start_url: "/",
         display: "standalone",
         background_color: "#ffffff",

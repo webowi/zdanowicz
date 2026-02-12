@@ -1,66 +1,119 @@
 import styled from "styled-components";
-import { colors } from "../../../utils/colors";
-import { pagesPaths } from "../../../constans/pagesPaths";
-import { minDeviceSize } from "../../../utils/deviceSize";
 import { Link } from "react-router-dom";
+import { pagesPaths } from "../../../constans/pagesPaths";
+import { colors } from "../../../utils/colors";
 
 export const Footer = () => {
   return (
-    <StyledFooter>
-      <div className="container"></div>
-      <StyledNav>
-        <StyledNavItem to={pagesPaths.privacyPolicy}>
-          Polityka prywatności
-        </StyledNavItem>
-        <StyledNavItem to={pagesPaths.offer}>Oferta</StyledNavItem>
-        <StyledNavItem to={pagesPaths.realizations}>Realizacje</StyledNavItem>
-        <StyledNavItem to={pagesPaths.machinePark}>Park maszyn</StyledNavItem>
-        <StyledNavItem to={pagesPaths.concretePlant}>Betoniarnia</StyledNavItem>
-        <StyledNavItem to={pagesPaths.contact}>Kontakt</StyledNavItem>
-      </StyledNav>
-      <StyledCopyrights>
-        &copy; 2025 Webowi.pl - wszelkie prawa zastrzeżone
-      </StyledCopyrights>
-    </StyledFooter>
+    <FooterWrapper>
+      <FooterContent>
+        <SiteMap>
+          <Section>
+            <SectionTitle>Mapa strony</SectionTitle>
+            <StyledNavItem to={pagesPaths.homePage}>
+              Strona główna
+            </StyledNavItem>
+            <StyledNavItem to={pagesPaths.offer}>Oferta</StyledNavItem>
+            <StyledNavItem to={pagesPaths.realizations}>
+              Realizacje
+            </StyledNavItem>
+            <StyledNavItem to={pagesPaths.contact}>Kontakt</StyledNavItem>
+          </Section>
+        </SiteMap>
+        <LegalInfo>
+          <Section>
+            <SectionTitle>Informacje prawne</SectionTitle>
+            <StyledNavItem to={pagesPaths.privacyPolicy}>
+              Polityka prywatności
+            </StyledNavItem>
+          </Section>
+        </LegalInfo>
+      </FooterContent>
+      <FooterBottom>
+        <Copyright>© 2026 Zdanowicz. Wszelkie prawa zastrzeżone.</Copyright>
+        <FooterNote>
+          Wykonanie:{" "}
+          <a href="https://webowi.pl" target="_blank" rel="noopener noreferrer">
+            webowi.pl
+          </a>
+        </FooterNote>
+      </FooterBottom>
+    </FooterWrapper>
   );
 };
 
-const StyledFooter = styled.footer`
+const FooterWrapper = styled.div`
   background-color: ${colors.black};
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
-  text-align: center;
-  border-top: 1px solid ${colors.grey};
+  padding: 2rem 1rem;
+  color: ${colors.white};
 `;
 
-const StyledNav = styled.nav`
+const FooterContent = styled.div`
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #444;
+`;
+
+const SiteMap = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 24px;
-  margin-top: 1rem;
+  align-items: center;
+`;
 
-  @media ${minDeviceSize.tablet} {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    justify-content: center;
-  }
+const LegalInfo = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Section = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+const SectionTitle = styled.h3`
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: ${colors.white};
+  font-weight: bold;
 `;
 
 const StyledNavItem = styled(Link)`
   cursor: pointer;
   text-decoration: none;
-  color: ${colors.grey};
+  color: ${colors.white};
   font-size: 0.875rem;
   &:hover {
-    color: ${colors.white};
+    color: ${colors.orange};
   }
 `;
 
-const StyledCopyrights = styled.p`
-  margin-top: 1.5rem;
-  color: ${colors.grey};
-  font-size: 0.875rem;
+const FooterBottom = styled.div`
   text-align: center;
+  padding-top: 1rem;
+`;
+
+const Copyright = styled.p`
+  font-size: 0.9rem;
+  color: ${colors.white};
+`;
+
+const FooterNote = styled.p`
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  color: ${colors.white};
+
+  a {
+    color: ${colors.white};
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;

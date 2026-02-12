@@ -5,112 +5,164 @@ import { maxDeviceSize } from "../utils/deviceSize";
 import MainLayout from "../layouts/MainLayout";
 
 const PrivacyPolicy: React.FC = () => {
+  const email = import.meta.env.VITE_EMAIL;
+  const phone = import.meta.env.VITE_PHONE_NUMBER;
+
   return (
     <MainLayout>
       <StyledSection>
         <div className="container">
           <h1>Polityka Prywatności</h1>
-          <p>Data wejścia w życie: 27.12.2024</p>
+          <p>Data ostatniej aktualizacji: 11.02.2026</p>
+
           <p>
-            Dziękujemy za odwiedzenie naszej strony internetowej. Ochrona Twoich
-            danych osobowych jest dla nas priorytetem. Poniżej znajdziesz
-            szczegółowe informacje na temat przetwarzania danych osobowych
-            zgodnie z ogólnym rozporządzeniem o ochronie danych (RODO).
+            Niniejsza Polityka Prywatności określa zasady przetwarzania danych
+            osobowych zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady
+            (UE) 2016/679 (RODO).
           </p>
 
-          <h2>1. Administrator Danych</h2>
+          <h2>1. Administrator danych</h2>
           <p>
-            Administratorem Twoich danych osobowych jest:
+            Administratorem danych osobowych jest:
             <br />
-            <strong>Nextbud Tobiasz Ratajczyk </strong>
+            <strong>FIRMA REMONTOWO-BUDOWLANA ARKADIUSZ ZDANOWICZ</strong>
             <br />
-            Adres: Białężyn 9A, 64-700 Czarnków
+            Dolaszewo 1, 64-930 Dolaszewo
             <br />
-            Telefon: 733 660 366
+            NIP: 7642649935
             <br />
+            REGON: 362977220
+            <br />
+            E-mail: <strong>{email}</strong>
+            <br />
+            Tel.: <strong>{phone}</strong>
           </p>
 
-          <h2>2. Jakie dane zbieramy?</h2>
+          <h2>2. Zakres przetwarzanych danych</h2>
           <p>
-            Korzystamy z Google Analytics w celu analizy ruchu na stronie
-            internetowej. W związku z tym możemy zbierać następujące dane:
+            Dane osobowe przetwarzane są w przypadku kontaktu telefonicznego lub
+            e-mailowego oraz w ramach korzystania ze strony internetowej.
           </p>
+
+          <p>Możemy przetwarzać:</p>
           <ul>
             <li>
-              Adres IP użytkownika (anonimizowany zgodnie z wymogami RODO),
+              dane kontaktowe przekazane dobrowolnie (np. imię, e-mail,
+              telefon),
             </li>
-            <li>Informacje o urządzeniu i przeglądarce,</li>
+            <li>adres IP, dane przeglądarki i urządzenia,</li>
             <li>
-              Statystyki dotyczące ruchu na stronie, takie jak czas przebywania,
-              źródło ruchu, odwiedzone strony.
+              dane techniczne związane z działaniem serwisu (np. logi serwera),
+            </li>
+            <li>
+              dane statystyczne w ujęciu zbiorczym dotyczące widoczności strony
+              w wyszukiwarce (Google Search Console).
             </li>
           </ul>
 
-          <h2>3. Cel i podstawa prawna przetwarzania danych</h2>
-          <p>
-            Twoje dane przetwarzamy wyłącznie w celu analizy ruchu na stronie
-            internetowej, aby poprawić funkcjonalność naszej witryny i jakość
-            naszych usług.
-          </p>
-          <p>
-            Podstawą prawną przetwarzania danych jest{" "}
-            <strong>zgoda użytkownika</strong>, która jest wyrażana poprzez
-            zaakceptowanie plików cookie analitycznych.
-          </p>
-
-          <h2>4. Pliki cookie</h2>
-          <p>
-            Nasza strona korzysta z plików cookie w celu zbierania danych
-            analitycznych. Pliki cookie analityczne są używane wyłącznie za
-            zgodą użytkownika. Możesz wycofać zgodę w dowolnym momencie,
-            zmieniając ustawienia plików cookie w swojej przeglądarce.
-          </p>
-
-          <h2>5. Przekazywanie danych</h2>
-          <p>
-            Dane zebrane za pomocą Google Analytics są przesyłane do Google LLC,
-            która działa jako procesor danych. W niektórych przypadkach dane
-            mogą być przesyłane na serwery znajdujące się w Stanach
-            Zjednoczonych. W celu ochrony Twoich danych stosujemy standardowe
-            klauzule umowne zgodnie z wymogami RODO.
-          </p>
-
-          <h2>6. Twoje prawa</h2>
-          <p>Masz prawo do:</p>
+          <h2>3. Cele i podstawa prawna przetwarzania</h2>
           <ul>
-            <li>Dostępu do swoich danych osobowych,</li>
-            <li>Sprostowania swoich danych,</li>
-            <li>Usunięcia swoich danych ("prawo do bycia zapomnianym"),</li>
-            <li>Ograniczenia przetwarzania swoich danych,</li>
-            <li>Wniesienia sprzeciwu wobec przetwarzania danych.</li>
+            <li>
+              odpowiedź na zapytanie i przygotowanie oferty – art. 6 ust. 1 lit.
+              b RODO,
+            </li>
+            <li>realizacja umowy – art. 6 ust. 1 lit. b RODO,</li>
+            <li>
+              zapewnienie bezpieczeństwa i prawidłowego działania serwisu (np.
+              przeciwdziałanie nadużyciom, diagnostyka błędów) – art. 6 ust. 1
+              lit. f RODO,
+            </li>
+            <li>
+              analiza widoczności strony w wynikach wyszukiwania i jej poprawne
+              indeksowanie (Google Search Console) – art. 6 ust. 1 lit. f RODO,
+            </li>
+            <li>
+              zabezpieczenie ewentualnych roszczeń – art. 6 ust. 1 lit. f RODO.
+            </li>
           </ul>
+
+          <h2>4. Google Search Console</h2>
           <p>
-            Aby skorzystać z tych praw, skontaktuj się z nami pod adresem
-            e-mail: [biuro@nextbud.eu].
+            Strona korzysta z narzędzia Google Search Console, dostarczanego
+            przez Google Ireland Limited, w celu monitorowania widoczności
+            strony w wynikach wyszukiwania oraz usprawnienia indeksowania.
+          </p>
+          <p>
+            Google Search Console nie służy do śledzenia użytkowników w celach
+            marketingowych ani do profilowania. Nie wykorzystujemy Google
+            Analytics ani plików cookies analitycznych.
+          </p>
+          <p>
+            Dane prezentowane w Google Search Console mają charakter
+            statystyczny i zbiorczy (np. liczba wyświetleń, kliknięć, frazy
+            wyszukiwania, błędy indeksowania). Google może przetwarzać dane w
+            ramach świadczenia usługi zgodnie ze swoimi zasadami (w tym w
+            szczególności dane techniczne i logi).
           </p>
 
-          <h2>7. Czas przechowywania danych</h2>
+          <h2>5. Odbiorcy danych</h2>
           <p>
-            Dane analityczne są przechowywane przez okres [określony czas, np.
-            14 miesięcy] zgodnie z ustawieniami Google Analytics.
+            Dane mogą być przekazywane podmiotom wspierającym działalność
+            administratora, takim jak:
+          </p>
+          <ul>
+            <li>dostawca hostingu (serwery w Polsce),</li>
+            <li>dostawcy usług IT i utrzymania serwisu,</li>
+            <li>Google Ireland Limited – w zakresie Google Search Console.</li>
+          </ul>
+
+          <h2>6. Okres przechowywania danych</h2>
+          <p>
+            Dane kontaktowe przechowywane są przez czas trwania współpracy oraz
+            do momentu przedawnienia ewentualnych roszczeń.
+          </p>
+          <p>
+            Dane techniczne (np. logi serwera) przechowywane są przez okres
+            niezbędny do zapewnienia bezpieczeństwa i prawidłowego działania
+            serwisu lub zgodnie z polityką dostawcy hostingu.
           </p>
 
-          <h2>8. Kontakt z organem nadzoru</h2>
+          <h2>7. Twoje prawa</h2>
+          <ul>
+            <li>dostępu do danych,</li>
+            <li>sprostowania danych,</li>
+            <li>usunięcia danych,</li>
+            <li>ograniczenia przetwarzania,</li>
+            <li>wniesienia sprzeciwu,</li>
+            <li>wniesienia skargi do organu nadzorczego (PUODO).</li>
+          </ul>
+
           <p>
-            Jeśli uznasz, że przetwarzamy Twoje dane osobowe niezgodnie z
-            prawem, masz prawo złożyć skargę do organu nadzorczego:
+            W sprawach związanych z ochroną danych osobowych można skontaktować
+            się pod adresem: <strong>{email}</strong>
           </p>
+
+          <h2>8. Organ nadzorczy</h2>
           <address>
-            Prezes Urzędu Ochrony Danych Osobowych (PUODO)
+            Prezes Urzędu Ochrony Danych Osobowych
             <br />
-            ul. Stawki 2, 00-193 Warszawa
+            ul. Stawki 2
+            <br />
+            00-193 Warszawa
           </address>
 
-          <h2>9. Zmiany w Polityce Prywatności</h2>
+          <h2>9. Pliki cookies</h2>
           <p>
-            Zastrzegamy sobie prawo do wprowadzania zmian w niniejszej Polityce
-            Prywatności. Wszelkie zmiany będą publikowane na tej stronie z
-            odpowiednią adnotacją o dacie ich wejścia w życie.
+            Strona wykorzystuje wyłącznie pliki cookies niezbędne do jej
+            działania (np. związane z bezpieczeństwem i zapamiętaniem decyzji o
+            wyświetlaniu komunikatu cookies). Nie stosujemy plików cookies
+            analitycznych ani marketingowych.
+          </p>
+          <p>
+            Użytkownik może zarządzać plikami cookies w ustawieniach swojej
+            przeglądarki.
+          </p>
+
+          <h2>10. Zmiany Polityki Prywatności</h2>
+          <p>
+            Administrator zastrzega sobie prawo do aktualizacji niniejszej
+            Polityki Prywatności. Aktualna wersja dokumentu dostępna jest zawsze
+            na stronie internetowej.
           </p>
         </div>
       </StyledSection>
@@ -122,6 +174,7 @@ const StyledSection = styled.section`
   background-color: ${colors.black};
   color: ${colors.white};
   padding: 10rem;
+
   h1 {
     text-align: center;
     margin-bottom: 2rem;
@@ -138,6 +191,12 @@ const StyledSection = styled.section`
   ul {
     margin-top: 1rem;
     margin-left: 2rem;
+  }
+
+  address {
+    margin-top: 1rem;
+    font-style: normal;
+    color: ${colors.grayLight};
   }
 
   @media ${maxDeviceSize.phone} {

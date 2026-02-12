@@ -9,7 +9,7 @@ interface LoadingProps {
 export const Loading: React.FC<LoadingProps> = ({ top = "50%" }) => {
   return (
     <LoadingContainer top={top}>
-      <Mosaic color={colors.yellow} size="medium" />
+      <Mosaic color={colors.orange} size="medium" />
     </LoadingContainer>
   );
 };

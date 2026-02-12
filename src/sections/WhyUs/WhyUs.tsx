@@ -8,14 +8,15 @@ export const WhyUs: React.FC = () => {
     <StyledSection>
       <ContentOverlay>
         <TextBlock>
-          <h2>Z nami wybudujesz swój wymarzony dom</h2>
+          <h2>Budujemy odpowiedzialnie</h2>
           <p>
-            Zachowując spokój, który często znika podczas takich inwestycji.
-            Jesteśmy z Państwem od początku do końca inwestycji.
+            Każdą inwestycję realizujemy pod pełnym nadzorem budowlanym, dbając
+            o zgodność z projektem, przepisami oraz najwyższy standard
+            wykonania.
           </p>
           <p>
-            Obsługujemy klientów indywidualnych, jak również deweloperów i
-            firmy.
+            Zapewniamy rzetelną dokumentację i kontrolę na każdym etapie — od
+            pierwszych prac po odbiór końcowy.
           </p>
         </TextBlock>
       </ContentOverlay>
@@ -53,7 +54,7 @@ const TextBlock = styled.div`
   h2 {
     font-size: 2.4rem;
     margin-bottom: 1rem;
-    color: ${colors.yellow};
+    color: ${colors.orange};
     font-weight: 700;
     text-transform: uppercase;
   }

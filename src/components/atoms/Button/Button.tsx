@@ -9,6 +9,7 @@ interface ButtonProps {
   to?: string;
   secondary?: boolean;
   children: React.ReactNode;
+  border?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -16,10 +17,11 @@ export const Button: React.FC<ButtonProps> = ({
   to,
   secondary,
   children,
+  border,
 }) => {
   if (to) {
     return (
-      <StyledLink to={to} secondary={secondary}>
+      <StyledLink to={to} $secondary={secondary}>
         {children}
       </StyledLink>
     );
@@ -27,7 +29,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   if (href) {
     return (
-      <StyledAnchor href={href} secondary={secondary}>
+      <StyledAnchor href={href} $secondary={secondary} $border={border}>
         {children}
       </StyledAnchor>
     );
@@ -36,10 +38,10 @@ export const Button: React.FC<ButtonProps> = ({
   return null;
 };
 
-const buttonStyles = css<{ secondary?: boolean }>`
-  color: ${({ secondary }) => (secondary ? colors.yellow : colors.white)};
-  background-color: ${({ secondary }) =>
-    secondary ? "transparent" : colors.lightBlack};
+const buttonStyles = css<{ $secondary?: boolean }>`
+  color: ${({ $secondary }) => ($secondary ? colors.orange : colors.white)};
+  background-color: ${({ $secondary }) =>
+    $secondary ? "transparent" : colors.lightBlack};
   font-size: 1rem;
   padding: 0.8rem 1.6rem;
   margin: 0.5rem;
@@ -47,8 +49,8 @@ const buttonStyles = css<{ secondary?: boolean }>`
   text-transform: uppercase;
   letter-spacing: 0.05rem;
   font-weight: 500;
-  border: ${({ secondary }) =>
-    secondary ? `2px solid ${colors.yellow}` : "2px solid transparent"};
+  border: ${({ $secondary }) =>
+    $secondary ? `2px solid ${colors.orange}` : "2px solid transparent"};
   border-radius: 8px;
   display: inline-flex;
   justify-content: center;
@@ -57,11 +59,11 @@ const buttonStyles = css<{ secondary?: boolean }>`
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: ${({ secondary }) =>
-      secondary ? colors.yellow : colors.black};
-    color: ${({ secondary }) => (secondary ? colors.black : colors.yellow)};
+    background-color: ${({ $secondary }) =>
+      $secondary ? colors.orange : colors.black};
+    color: ${({ $secondary }) => ($secondary ? colors.black : colors.orange)};
     box-shadow: 0px 8px 20px rgba(249, 178, 0, 0.2);
-    border-color: ${colors.yellow};
+    border-color: ${colors.orange};
     transform: translateY(-2px);
   }
 
@@ -76,10 +78,12 @@ const buttonStyles = css<{ secondary?: boolean }>`
   }
 `;
 
-const StyledLink = styled(Link)<{ secondary?: boolean }>`
+const StyledLink = styled(Link)<{ $secondary?: boolean }>`
   ${buttonStyles}
 `;
 
-const StyledAnchor = styled.a<{ secondary?: boolean }>`
+const StyledAnchor = styled.a<{ $secondary?: boolean; $border?: string }>`
   ${buttonStyles}
+  border-color: ${({ $border, $secondary }) =>
+    $border || $secondary ? colors.orange : "transparent"};
 `;

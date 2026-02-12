@@ -1,6 +1,6 @@
 import React from "react";
 import ScrollToTop from "react-scroll-to-top";
-import { FaArrowUp } from "react-icons/fa"; // Możesz użyć dowolnej ikony
+import { FaArrowUp } from "react-icons/fa";
 import styled from "styled-components";
 import { colors } from "../../../utils/colors";
 
@@ -11,7 +11,7 @@ export const ScrollToTopButton: React.FC = () => {
 };
 
 const StyledScrollToTop = styled(ScrollToTop)`
-  background-color: ${colors.yellow};
+  background-color: ${colors.orange};
   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
   border-radius: 50%;
   transition: all 0.3s ease;

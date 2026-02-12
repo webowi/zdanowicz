@@ -1,0 +1,2 @@
+echo "📏 Sprawdzam lint (ESLint)..."
+npm run lint

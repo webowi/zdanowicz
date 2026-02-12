@@ -1,64 +1,78 @@
 import styled from "styled-components";
 import { maxDeviceSize } from "../../utils/deviceSize";
 import { colors } from "../../utils/colors";
-import { FaBuilding, FaIndustry, FaThermometerHalf } from "react-icons/fa";
-import { GiWreckingBall } from "react-icons/gi";
+import {
+  MdOutlineFoundation,
+  MdOutlineHomeWork,
+  MdOutlineFormatPaint,
+} from "react-icons/md";
+import { GiBrickWall } from "react-icons/gi";
 import { AboutBox } from "../../components/molecules/AboutBox/AboutBox";
 
 interface AboutUsDetailProps {
-  isHighlighted: boolean;
+  $isHighlighted: boolean;
 }
 
 export const AboutUsDetail: React.FC<AboutUsDetailProps> = ({
-  isHighlighted = false,
+  $isHighlighted = false,
 }) => {
   return (
-    <StyledAboutWrapper isHighlighted={isHighlighted}>
+    <StyledAboutWrapper $isHighlighted={$isHighlighted}>
       <StyledContent>
-        <StyledHeader>
-          Nasza firma również świadczy usługi budowlane między innymi:
-        </StyledHeader>
+        <StyledHeader>Zakres realizowanych prac</StyledHeader>
+
         <StyledBoxes>
           <AboutBox
-            Icon={FaBuilding}
-            Title="Realizacja projektów budowlanych"
+            Icon={MdOutlineFoundation}
+            Title="Roboty żelbetowe"
+            Subtitle="fundamenty • stropy • schody • elementy konstrukcyjne"
             duration={0.5}
           />
+
           <AboutBox
-            Icon={FaIndustry}
-            Title="Budowa obiektów przemysłowych"
+            Icon={GiBrickWall}
+            Title="Roboty murarskie"
+            Subtitle="ściany nośne i działowe • nadproża • prace konstrukcyjne"
             duration={0.6}
           />
+
           <AboutBox
-            Icon={FaThermometerHalf}
-            Title="Ocieplenia i elewacje"
+            Icon={MdOutlineHomeWork}
+            Title="Elewacje i ocieplenia"
+            Subtitle="systemy dociepleń • tynki elewacyjne • wykończenia fasad"
             duration={0.7}
           />
+
           <AboutBox
-            Icon={GiWreckingBall}
-            Title="Rozbiórki i burzenia"
+            Icon={MdOutlineFormatPaint}
+            Title="Wykończenia wnętrz"
+            Subtitle="gładzie • zabudowy GK • podłogi • łazienki i kuchnie"
             duration={0.8}
           />
         </StyledBoxes>
-        <StyledFooter>i wiele innych</StyledFooter>
+
+        <StyledSeoNote>
+          Zakres obejmuje również biały montaż, montaż drzwi i zabudów, prace
+          instalacyjne oraz detale wykończeniowe.
+        </StyledSeoNote>
       </StyledContent>
     </StyledAboutWrapper>
   );
 };
 
 const StyledAboutWrapper = styled.section<AboutUsDetailProps>`
-  background-color: ${({ isHighlighted }) =>
-    isHighlighted ? colors.white : colors.black};
-  color: ${({ isHighlighted }) =>
-    isHighlighted ? colors.black : colors.white};
+  background-color: ${({ $isHighlighted }) =>
+    $isHighlighted ? colors.lightBlack : colors.black};
+  color: ${colors.white};
   width: 100%;
-  min-height: 50vh;
+  min-height: 60vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  padding: 10rem;
-  transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out;
+  padding: 8rem 2rem;
+  transition:
+    background-color 0.8s ease-in-out,
+    color 0.8s ease-in-out;
 
   @media ${maxDeviceSize.tablet} {
     padding: 5rem 1rem;
@@ -72,6 +86,18 @@ const StyledContent = styled.div`
   text-align: center;
   max-width: 1200px;
   width: 100%;
+`;
+
+const StyledHeader = styled.h2`
+  font-size: 2rem;
+  margin-bottom: 3rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+
+  @media ${maxDeviceSize.tablet} {
+    font-size: 1.6rem;
+  }
 `;
 
 const StyledBoxes = styled.div`
@@ -89,21 +115,15 @@ const StyledBoxes = styled.div`
   }
 `;
 
-const StyledFooter = styled.div`
-  margin-top: 2rem;
-  font-size: 1.2rem;
-  color: ${colors.grayLight};
+const StyledSeoNote = styled.p`
+  margin-top: 2.5rem;
+  max-width: 900px;
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.8;
+  color: ${colors.white};
 
   @media ${maxDeviceSize.tablet} {
-    font-size: 1rem;
-  }
-`;
-
-const StyledHeader = styled.h2`
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
-
-  @media ${maxDeviceSize.tablet} {
-    font-size: 1.2rem;
+    font-size: 0.95rem;
   }
 `;

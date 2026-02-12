@@ -1,13 +1,14 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
-import { getRealizations } from "../services/ResourceApiManager";
 import MainLayout from "../layouts/MainLayout";
 import { colors } from "../utils/colors";
 import { RealizationCard } from "../components/molecules/RealizationCard/RealizationCard";
 import { maxDeviceSize } from "../utils/deviceSize";
 import HeroVideoBackground from "../assets/HeroSmoke.mp4";
 import HeroPosterVideoBackground from "../assets/heroSmokePoster.webp";
-import { Loading } from "../components/atoms/Loading/Loading";
+import HouseImage from "../assets/building.webp";
+import ExcavationImage from "../assets/excavation.webp";
+import { motion } from "motion/react";
 
 interface RealizationImage {
   image: string;
@@ -21,51 +22,50 @@ interface Realization {
   images: RealizationImage[];
 }
 
+const realizations: Realization[] = [
+  {
+    uuid: "1",
+    name: "Budowa domu jednorodzinnego",
+    description:
+      "Kompleksowa realizacja budowy domu jednorodzinnego, obejmująca wszystkie etapy od projektu po wykończenie.",
+    mainImage: HouseImage,
+    images: [{ image: HouseImage }, { image: HouseImage }],
+  },
+  {
+    uuid: "2",
+    name: "Hala magazynowa",
+    description:
+      "Realizacja hali magazynowej o powierzchni 2000 m², z zastosowaniem nowoczesnych technologii budowlanych.",
+    mainImage: ExcavationImage,
+    images: [{ image: ExcavationImage }, { image: ExcavationImage }],
+  },
+];
+
 const RealizationsPage: React.FC = () => {
-  const [realizations, setRealizations] = useState<Realization[]>([]);
-  const [filteredRealizations, setFilteredRealizations] = useState<
-    Realization[]
-  >([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [backgroundHeight, setBackgroundHeight] = useState<string>("100vh");
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    const fetchRealizations = async () => {
-      try {
-        const data = await getRealizations();
-        setRealizations(data as Realization[]);
-        setFilteredRealizations(data as Realization[]);
-      } catch (error) {
-        console.error("Error fetching realizations:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const filteredRealizations = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return realizations;
 
-    fetchRealizations();
-  }, []);
+    return realizations.filter((r) => {
+      const name = r.name.toLowerCase();
+      const desc = (r.description ?? "").toLowerCase();
+      return name.includes(q) || desc.includes(q);
+    });
+  }, [searchQuery]);
 
   useEffect(() => {
-    const filtered = realizations.filter(
-      (realization) =>
-        realization.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        realization.description
-          ?.toLowerCase()
-          .includes(searchQuery.toLowerCase())
-    );
-    setFilteredRealizations(filtered);
-  }, [searchQuery, realizations]);
+    const node = containerRef.current;
+    if (!node) return;
 
-  useEffect(() => {
     const updateBackgroundHeight = () => {
-      if (containerRef.current) {
-        const { offsetHeight } = containerRef.current;
-        setBackgroundHeight(
-          `${Math.max(offsetHeight + 100, window.innerHeight)}px`
-        );
-      }
+      const { offsetHeight } = node;
+      setBackgroundHeight(
+        `${Math.max(offsetHeight + 100, window.innerHeight)}px`,
+      );
     };
 
     updateBackgroundHeight();
@@ -74,7 +74,7 @@ const RealizationsPage: React.FC = () => {
     return () => {
       window.removeEventListener("resize", updateBackgroundHeight);
     };
-  }, [filteredRealizations]);
+  }, [filteredRealizations.length]);
 
   return (
     <MainLayout>
@@ -87,6 +87,7 @@ const RealizationsPage: React.FC = () => {
           />
         </video>
       </BackgroundVideoContainer>
+
       <PageContainer ref={containerRef}>
         <SearchContainer>
           <SearchInput
@@ -97,17 +98,23 @@ const RealizationsPage: React.FC = () => {
           />
         </SearchContainer>
 
-        {isLoading ? (
-          <Loading top="300%" />
-        ) : filteredRealizations.length === 0 ? (
+        {filteredRealizations.length === 0 ? (
           <NoDataMessage>Brak realizacji do wyświetlenia.</NoDataMessage>
         ) : (
           <RealizationsContainer>
-            {filteredRealizations.map((realization) => (
-              <RealizationCard
+            {filteredRealizations.map((realization, index) => (
+              <AnimatedCard
                 key={realization.uuid}
-                realization={realization}
-              />
+                initial={{ y: 60, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{
+                  duration: 0.8,
+                  delay: Math.min(index * 0.08, 0.4),
+                }}
+              >
+                <RealizationCard realization={realization} />
+              </AnimatedCard>
             ))}
           </RealizationsContainer>
         )}
@@ -133,7 +140,7 @@ const BackgroundVideoContainer = styled.div`
 
 const PageContainer = styled.div`
   position: relative;
-  z-index: 2; /* Zawartość powyżej tła */
+  z-index: 2;
   padding-top: 10rem;
   color: ${colors.white};
   width: 100%;
@@ -150,7 +157,7 @@ const SearchInput = styled.input`
   max-width: 500px;
   padding: 0.8rem;
   font-size: 1.2rem;
-  border: 2px solid ${colors.yellow};
+  border: 2px solid ${colors.orange};
   border-radius: 5px;
   background: ${colors.lightBlack};
   color: ${colors.white};
@@ -167,7 +174,7 @@ const SearchInput = styled.input`
   }
 `;
 
-export const RealizationsContainer = styled.div`
+const RealizationsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
@@ -191,6 +198,10 @@ export const RealizationsContainer = styled.div`
     padding: 2rem;
     gap: 1rem;
   }
+`;
+
+const AnimatedCard = styled(motion.div)`
+  will-change: transform, opacity;
 `;
 
 const NoDataMessage = styled.div`

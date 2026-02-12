@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { colors } from "../../../utils/colors";
-import { getImageUrl } from "../../../services/ImageProvider";
 import { ButtonModal } from "../../atoms/ButtonModal/ButtonModal";
 import { FaTimes } from "react-icons/fa";
 
@@ -34,7 +33,7 @@ export const RealizationCard: React.FC<RealizationCardProps> = ({
     <>
       <Card>
         <CardImage
-          src={getImageUrl(realization.mainImage)}
+          src={realization.mainImage}
           alt={realization.name}
           loading="lazy"
         />
@@ -62,7 +61,7 @@ export const RealizationCard: React.FC<RealizationCardProps> = ({
               {realization.images.map((image, index) => (
                 <GalleryImage
                   key={index}
-                  src={getImageUrl(image.image)}
+                  src={image.image}
                   alt={`Realization ${index + 1}`}
                 />
               ))}
@@ -117,7 +116,9 @@ const CardContent = styled.div`
   padding: 30px;
   background: rgba(0, 0, 0, 0.6);
   color: ${colors.white};
-  transition: transform 0.3s, inset 0.3s ease-out;
+  transition:
+    transform 0.3s,
+    inset 0.3s ease-out;
 
   ${Card}:hover & {
     bottom: 0%;
@@ -128,7 +129,9 @@ const CardHeading = styled.h2`
   margin: 0;
   font-size: 1.5rem;
   text-transform: uppercase;
-  transition: transform 0.3s, inset 0.3s ease-out;
+  transition:
+    transform 0.3s,
+    inset 0.3s ease-out;
 
   ${Card}:hover & {
     transform: translateY(-10px);
@@ -150,7 +153,7 @@ const CardButtonContainer = styled.div`
   margin-top: 10px;
   background: none;
   border: none;
-  color: ${colors.yellow};
+  color: ${colors.orange};
   font-size: 1rem;
   display: flex;
   align-items: center;
@@ -198,7 +201,7 @@ const CloseIcon = styled.div`
   right: 20px;
   font-size: 1.5rem;
   cursor: pointer;
-  color: ${colors.yellow};
+  color: ${colors.orange};
 
   &:hover {
     color: ${colors.white};
@@ -221,7 +224,7 @@ const GalleryImage = styled.img`
 
 const ModalHeading = styled.h2`
   margin-top: 1rem;
-  color: ${colors.yellow};
+  color: ${colors.orange};
 `;
 
 const ModalDescription = styled.p`

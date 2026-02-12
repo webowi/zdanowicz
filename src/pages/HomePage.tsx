@@ -30,8 +30,8 @@ const HomePage = () => {
       <Hero />
       <AboutUs />
       <WhyUs />
-      <AboutUsDetail isHighlighted={isContactVisible} />
-      <Contact isHighlighted={isContactVisible} />
+      <AboutUsDetail $isHighlighted={isContactVisible} />
+      <Contact $isHighlighted={isContactVisible} />
     </MainLayout>
   );
 };

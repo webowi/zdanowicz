@@ -1,5 +1,5 @@
 {
-  "name": "Nextbud",
+  "name": "Zdanowicz - Usługi ogólnobudowlane",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,35 +7,36 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky"
   },
   "dependencies": {
-    "axios": "^1.7.9",
-    "motion": "^11.15.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-icons": "^5.4.0",
+    "axios": "^1.13.5",
+    "motion": "^12.34.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-icons": "^5.5.0",
     "react-loading-indicators": "^1.0.0",
-    "react-router-dom": "^7.1.0",
-    "react-scroll": "^1.9.0",
-    "react-scroll-to-top": "^3.0.0",
+    "react-router-dom": "^7.13.0",
+    "react-scroll": "^1.9.3",
+    "react-scroll-to-top": "^3.1.0",
     "react-type-animation": "^3.2.0",
-    "styled-components": "^6.1.13"
+    "styled-components": "^6.3.9"
   },
   "devDependencies": {
-    "@eslint/js": "^9.17.0",
-    "@types/node": "^22.10.2",
-    "@types/react": "^18.3.17",
-    "@types/react-dom": "^18.3.5",
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^25.2.2",
+    "@types/react": "^19.2.13",
+    "@types/react-dom": "^19.2.3",
     "@types/react-scroll": "^1.8.10",
-    "@vitejs/plugin-react-swc": "^3.5.0",
-    "eslint": "^9.17.0",
-    "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.16",
-    "globals": "^15.13.0",
-    "typescript": "~5.6.2",
-    "typescript-eslint": "^8.18.1",
-    "vite": "^6.0.3",
-    "vite-plugin-pwa": "^0.21.1"
+    "@vitejs/plugin-react-swc": "^4.2.3",
+    "eslint": "^9.39.2",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.0",
+    "globals": "^17.3.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.55.0",
+    "vite": "^7.3.1",
+    "vite-plugin-pwa": "^1.2.0"
   }
 }

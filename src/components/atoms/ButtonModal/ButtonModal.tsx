@@ -13,7 +13,7 @@ export const ButtonModal: React.FC<ButtonProps> = ({ onClick, children }) => {
 };
 
 const StyledButton = styled.button`
-  color: ${colors.yellow};
+  color: ${colors.orange};
   background-color: transparent;
   font-size: 1rem;
   padding: 0.8rem 1.6rem;
@@ -22,7 +22,7 @@ const StyledButton = styled.button`
   text-transform: uppercase;
   letter-spacing: 0.05rem;
   font-weight: 500;
-  border: 2px solid ${colors.yellow};
+  border: 2px solid ${colors.orange};
   border-radius: 8px;
   display: inline-flex;
   justify-content: center;
@@ -32,10 +32,10 @@ const StyledButton = styled.button`
   display: flex;
 
   &:hover {
-    background-color: ${colors.yellow};
+    background-color: ${colors.orange};
     color: ${colors.black};
     box-shadow: 0px 8px 20px rgba(249, 178, 0, 0.2);
-    border-color: ${colors.yellow};
+    border-color: ${colors.orange};
     transform: translateY(-2px);
   }
 

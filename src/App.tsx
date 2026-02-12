@@ -5,20 +5,18 @@ import { GlobalStyle } from "./styles/global";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import OfferPage from "./pages/OfferPage";
 import RealizationsPage from "./pages/RealizationsPage";
-import ConcretePlantPage from "./pages/ConcretePlantPage";
-import MachineParkPage from "./pages/MachineParkPage";
 import ContactPage from "./pages/ContactPage";
+import ScrollToTop from "./components/atoms/ScrollToTop/ScrollToTop";
 
 const App = () => (
   <BrowserRouter>
+    <ScrollToTop />
     <GlobalStyle />
     <Routes>
       <Route index path={pagesPaths.homePage} element={<HomePage />} />
       <Route path={pagesPaths.privacyPolicy} element={<PrivacyPolicy />} />
       <Route path={pagesPaths.offer} element={<OfferPage />} />
       <Route path={pagesPaths.realizations} element={<RealizationsPage />} />
-      <Route path={pagesPaths.concretePlant} element={<ConcretePlantPage />} />
-      <Route path={pagesPaths.machinePark} element={<MachineParkPage />} />
       <Route path={pagesPaths.contact} element={<ContactPage />} />
     </Routes>
   </BrowserRouter>

@@ -7,12 +7,14 @@ interface AboutBoxProps {
   Icon: React.ElementType;
   Title: string;
   duration: number;
+  Subtitle: string;
 }
 
 export const AboutBox: React.FC<AboutBoxProps> = ({
   Icon,
   Title,
   duration,
+  Subtitle,
 }) => {
   return (
     <StyledBox
@@ -21,9 +23,10 @@ export const AboutBox: React.FC<AboutBoxProps> = ({
       transition={{ duration }}
     >
       <IconWrapper>
-        <Icon size={32} color={colors.yellow} />
+        <Icon size={32} color={colors.orange} />
       </IconWrapper>
       <h3>{Title}</h3>
+      <p>{Subtitle}</p>
     </StyledBox>
   );
 };
@@ -36,7 +39,9 @@ const StyledBox = styled(motion.div)`
   align-items: center;
   text-align: center;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   overflow: hidden;
   background: linear-gradient(145deg, ${colors.lightBlack}, ${colors.black});
 
@@ -60,7 +65,8 @@ const IconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1),
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.1),
     0 4px 8px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s ease;
 
