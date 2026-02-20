@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import { colors } from "../../../utils/colors";
 import { maxDeviceSize } from "../../../utils/deviceSize";
 
+type ButtonVariant = "primary" | "secondary" | "tertiary";
+
 interface ButtonProps {
   href?: string;
   to?: string;
-  secondary?: boolean;
+  variant?: ButtonVariant;
   children: React.ReactNode;
   border?: string;
 }
@@ -15,13 +17,13 @@ interface ButtonProps {
 export const Button: React.FC<ButtonProps> = ({
   href,
   to,
-  secondary,
+  variant = "primary",
   children,
   border,
 }) => {
   if (to) {
     return (
-      <StyledLink to={to} $secondary={secondary}>
+      <StyledLink to={to} $variant={variant}>
         {children}
       </StyledLink>
     );
@@ -29,7 +31,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   if (href) {
     return (
-      <StyledAnchor href={href} $secondary={secondary} $border={border}>
+      <StyledAnchor href={href} $variant={variant} $border={border}>
         {children}
       </StyledAnchor>
     );
@@ -38,52 +40,120 @@ export const Button: React.FC<ButtonProps> = ({
   return null;
 };
 
-const buttonStyles = css<{ $secondary?: boolean }>`
-  color: ${({ $secondary }) => ($secondary ? colors.orange : colors.white)};
-  background-color: ${({ $secondary }) =>
-    $secondary ? "transparent" : colors.lightBlack};
-  font-size: 1rem;
-  padding: 0.8rem 1.6rem;
-  margin: 0.5rem;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 0.05rem;
-  font-weight: 500;
-  border: ${({ $secondary }) =>
-    $secondary ? `2px solid ${colors.orange}` : "2px solid transparent"};
-  border-radius: 8px;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
+const buttonStyles = css<{ $variant: ButtonVariant; $border?: string }>`
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
 
-  &:hover {
-    background-color: ${({ $secondary }) =>
-      $secondary ? colors.orange : colors.black};
-    color: ${({ $secondary }) => ($secondary ? colors.black : colors.orange)};
-    box-shadow: 0px 8px 20px rgba(249, 178, 0, 0.2);
-    border-color: ${colors.orange};
-    transform: translateY(-2px);
-  }
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-transform: none;
+
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease;
+
+  ${({ $variant }) =>
+    $variant === "primary" &&
+    css`
+      color: ${colors.white};
+      background: ${colors.lightBlack};
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+
+      &:hover {
+        transform: translateY(-1px);
+        background: ${colors.black};
+        color: ${colors.orange};
+        border-color: rgba(238, 52, 56, 0.22);
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+      }
+    `}
+
+  ${({ $variant }) =>
+    $variant === "secondary" &&
+    css`
+      color: #111;
+      background: rgba(238, 52, 56, 0.12);
+      border: 1px solid rgba(238, 52, 56, 0.28);
+      box-shadow:
+        0 10px 22px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.65);
+
+      &:hover {
+        transform: translateY(-1px);
+        background: rgba(238, 52, 56, 0.18);
+        border-color: rgba(238, 52, 56, 0.4);
+        box-shadow:
+          0 14px 30px rgba(0, 0, 0, 0.12),
+          inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      }
+    `}
+
+${({ $variant }) =>
+    $variant === "tertiary" &&
+    css`
+      color: #111;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.55);
+
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+
+      box-shadow:
+        0 14px 34px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.75);
+
+      &:hover {
+        transform: translateY(-1px);
+        background: rgba(255, 255, 255, 0.88);
+        border-color: rgba(238, 52, 56, 0.35);
+        box-shadow:
+          0 18px 44px rgba(0, 0, 0, 0.22),
+          inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      }
+    `}
 
   &:active {
-    transform: translateY(1px);
-    box-shadow: none;
+    transform: translateY(0);
   }
+
+  &:focus-visible {
+    outline: 3px solid rgba(238, 52, 56, 0.35);
+    outline-offset: 3px;
+  }
+
+  ${({ $border }) =>
+    $border &&
+    css`
+      border-color: ${$border};
+    `}
 
   @media ${maxDeviceSize.phone} {
-    font-size: 1rem;
-    padding: 0.6rem 1.2rem;
+    height: 42px;
+    padding: 0 16px;
+    font-size: 0.98rem;
   }
 `;
 
-const StyledLink = styled(Link)<{ $secondary?: boolean }>`
+const StyledLink = styled(Link)<{ $variant: ButtonVariant }>`
   ${buttonStyles}
 `;
 
-const StyledAnchor = styled.a<{ $secondary?: boolean; $border?: string }>`
+const StyledAnchor = styled.a<{ $variant: ButtonVariant; $border?: string }>`
   ${buttonStyles}
-  border-color: ${({ $border, $secondary }) =>
-    $border || $secondary ? colors.orange : "transparent"};
 `;

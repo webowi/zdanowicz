@@ -17,60 +17,105 @@ export const AboutBox: React.FC<AboutBoxProps> = ({
   Subtitle,
 }) => {
   return (
-    <StyledBox
-      initial={{ opacity: 0, y: 50 }}
+    <Card
+      initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration }}
     >
-      <IconWrapper>
-        <Icon size={32} color={colors.orange} />
-      </IconWrapper>
-      <h3>{Title}</h3>
-      <p>{Subtitle}</p>
-    </StyledBox>
+      <IconBadge aria-hidden="true">
+        <Icon size={22} />
+      </IconBadge>
+
+      <TitleEl>{Title}</TitleEl>
+      <SubtitleEl>{Subtitle}</SubtitleEl>
+    </Card>
   );
 };
 
-const StyledBox = styled(motion.div)`
-  border-radius: 12px;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+const Card = styled(motion.div)`
+  min-width: 0;
+  width: 100%;
+  position: relative;
   overflow: hidden;
-  background: linear-gradient(145deg, ${colors.lightBlack}, ${colors.black});
 
-  &:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 20px rgba(255, 223, 0, 0.5);
+  border-radius: 18px;
+  padding: 18px 16px;
+
+  text-align: left;
+  display: grid;
+  gap: 8px;
+
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease;
+
+  &:before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    pointer-events: none;
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.28),
+      rgba(255, 255, 255, 0.1) 35%,
+      rgba(255, 255, 255, 0) 62%
+    );
+    opacity: 0.65;
   }
 
-  h3 {
-    margin-top: 1rem;
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: ${colors.white};
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow:
+      0 22px 46px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  }
+
+  &:active {
+    transform: translateY(-1px);
   }
 `;
 
-const IconWrapper = styled.div`
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow:
-    inset 0 2px 4px rgba(255, 255, 255, 0.1),
-    0 4px 8px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease;
+const IconBadge = styled.div`
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
 
-  ${StyledBox}:hover & {
-    transform: scale(1.1);
-  }
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(238, 52, 56, 0.1);
+  border: 1px solid rgba(238, 52, 56, 0.18);
+  color: ${colors.orange};
+
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+`;
+
+const TitleEl = styled.h3`
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #111;
+  letter-spacing: 0.01em;
+`;
+
+const SubtitleEl = styled.p`
+  margin: 0;
+  color: rgba(0, 0, 0, 0.68);
+  font-size: 0.98rem;
+  line-height: 1.45;
 `;

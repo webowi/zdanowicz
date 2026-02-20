@@ -36,7 +36,7 @@ const StyledVideoBackground = styled.video<{ fullScreen?: boolean }>`
   width: ${({ fullScreen }) => (fullScreen ? "100vw" : "100%")};
   height: ${({ fullScreen }) => (fullScreen ? "100vh" : "100%")};
   object-fit: cover;
-  filter: brightness(50%);
+  /* filter: brightness(50%); */
 `;
 
 const VisuallyHidden = styled.div`

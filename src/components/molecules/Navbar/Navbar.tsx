@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import styled from "styled-components";
 import { NavLink, useLocation } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
@@ -32,140 +32,85 @@ const navItems: NavItem[] = [
 ];
 
 const Navbar = () => {
-  const [visible, setVisible] = useState(true);
-  const [isTop, setIsTop] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const location = useLocation();
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
   const openerRef = useRef<HTMLButtonElement | null>(null);
 
-  // ---- Scroll refs (bez przepinania listenera)
-  const prevYRef = useRef(0);
-  const tickingRef = useRef(false);
-
-  useEffect(() => {
-    const update = () => {
-      tickingRef.current = false;
-
-      const y = window.scrollY;
-
-      setIsTop(y < 10);
-
-      // schowaj dopiero po mini progu, żeby nie "migało"
-      const shouldShow = y < 40 || y < prevYRef.current;
-      setVisible(shouldShow);
-
-      prevYRef.current = y;
-    };
-
-    const onScroll = () => {
-      // throttling przez rAF = mniej setState
-      if (tickingRef.current) return;
-      tickingRef.current = true;
-      window.requestAnimationFrame(update);
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    update(); // initial
-
-    return () => window.removeEventListener("scroll", onScroll);
+  const closeMenu = useCallback(() => {
+    setMenuOpen(false);
+    openerRef.current?.focus();
   }, []);
 
-  // ---- Close on route change (tylko gdy pathname faktycznie się zmieni)
-  const lastPathRef = useRef(location.pathname);
-  const menuOpenRef = useRef(menuOpen);
-
-  useEffect(() => {
-    menuOpenRef.current = menuOpen;
-  }, [menuOpen]);
-
-  useEffect(() => {
-    if (lastPathRef.current === location.pathname) return;
-    lastPathRef.current = location.pathname;
-
-    if (!menuOpenRef.current) return;
-
-    // async -> żeby nie triggerować "set-state-in-effect"
-    const id = window.setTimeout(() => setMenuOpen(false), 0);
-    return () => window.clearTimeout(id);
-  }, [location.pathname]);
-
-  // ---- Lock body scroll + ESC + focus (tylko gdy menu otwarte)
   useEffect(() => {
     if (!menuOpen) return;
 
-    const previousOverflow = document.body.style.overflow;
+    const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     const focusId = window.setTimeout(() => closeBtnRef.current?.focus(), 0);
 
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setMenuOpen(false);
-        openerRef.current?.focus();
-      }
+      if (e.key === "Escape") closeMenu();
     };
 
     window.addEventListener("keydown", onKeyDown);
 
     return () => {
       window.clearTimeout(focusId);
-      document.body.style.overflow = previousOverflow;
+      document.body.style.overflow = prevOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [menuOpen]);
-
-  const openMenu = () => setMenuOpen(true);
-  const closeMenu = () => {
-    setMenuOpen(false);
-    openerRef.current?.focus();
-  };
+  }, [menuOpen, closeMenu]);
 
   return (
     <>
-      <StyledNavbarWrapper $visible={visible} $isTop={isTop}>
-        <StyledNavbarContainer>
-          <StyledLogo>
+      <Wrap>
+        <Bar>
+          <Logo>
             <NavLink to={pagesPaths.homePage} aria-label="Strona główna">
               <img src={LogoImage} alt="Logo Zdanowicz" />
             </NavLink>
-          </StyledLogo>
+          </Logo>
 
-          {/* Desktop */}
-          <StyledNavSection>
+          <DesktopNav>
             {navItems.map(({ to, label, variant }) =>
               variant === "primary" ? (
-                <DesktopPrimaryLink key={to} to={to}>
+                <PrimaryLink key={to} to={to}>
                   {label}
-                </DesktopPrimaryLink>
+                </PrimaryLink>
               ) : (
-                <DesktopLink key={to} to={to}>
+                <Link key={to} to={to}>
                   {label}
-                </DesktopLink>
+                </Link>
               ),
             )}
-          </StyledNavSection>
+          </DesktopNav>
 
-          {/* Mobile toggle */}
-          <MobileToggleButton
+          <MobileToggle
             ref={openerRef}
-            onClick={menuOpen ? closeMenu : openMenu}
+            onClick={() => setMenuOpen((v) => !v)}
             aria-label={menuOpen ? "Zamknij menu" : "Otwórz menu"}
             aria-expanded={menuOpen}
             aria-controls="mobile-nav-drawer"
             type="button"
           >
             {menuOpen ? <FaTimes /> : <FaBars />}
-          </MobileToggleButton>
-        </StyledNavbarContainer>
-      </StyledNavbarWrapper>
+          </MobileToggle>
+        </Bar>
+      </Wrap>
 
-      {/* Backdrop */}
-      <Backdrop $open={menuOpen} onClick={closeMenu} aria-hidden={!menuOpen} />
+      {/* key sprawia, że po zmianie trasy overlay/drawer "czyści się" bez efektu z setState */}
+      <Backdrop
+        key={`backdrop:${location.pathname}`}
+        $open={menuOpen}
+        onClick={closeMenu}
+        aria-hidden={!menuOpen}
+      />
 
-      {/* Drawer */}
       <Drawer
+        key={`drawer:${location.pathname}`}
         id="mobile-nav-drawer"
         role="dialog"
         aria-modal="true"
@@ -210,31 +155,34 @@ const Navbar = () => {
   );
 };
 
-const StyledNavbarWrapper = styled.div<{
-  $visible: boolean;
-  $isTop: boolean;
-}>`
+export default Navbar;
+
+/* STYLES bez zmian poniżej */
+
+const Wrap = styled.header`
   position: fixed;
-  top: ${({ $visible }) => ($visible ? "0" : "-120px")};
+  top: 0;
+  left: 0;
   width: 100%;
   z-index: 1010;
 
-  background: ${({ $isTop }) => ($isTop ? "transparent" : "rgba(0,0,0,0.78)")};
-  border-bottom: ${({ $isTop }) =>
-    $isTop ? "1px solid transparent" : "1px solid rgba(255,255,255,0.08)"};
+  background: rgba(255, 255, 255, 0.62);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 
-  backdrop-filter: ${({ $isTop }) => ($isTop ? "none" : "blur(10px)")};
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
 
   transition:
-    top 0.35s ease,
-    background 0.25s ease,
-    border-color 0.25s ease;
+    background 0.18s ease,
+    border-color 0.18s ease,
+    backdrop-filter 0.18s ease;
 `;
 
-const StyledNavbarContainer = styled.nav`
+const Bar = styled.nav`
   max-width: 1200px;
   margin: 0 auto;
   padding: 12px 18px;
+
   display: flex;
   align-items: center;
 
@@ -243,11 +191,14 @@ const StyledNavbarContainer = styled.nav`
   }
 `;
 
-const StyledLogo = styled.div`
+const Logo = styled.div`
   flex-grow: 1;
+  min-width: 0;
 
   img {
     width: 50%;
+    height: auto;
+    display: block;
 
     @media ${maxDeviceSize.phone} {
       width: 100%;
@@ -255,7 +206,7 @@ const StyledLogo = styled.div`
   }
 `;
 
-const StyledNavSection = styled.div`
+const DesktopNav = styled.div`
   display: flex;
   align-items: center;
   gap: 18px;
@@ -265,46 +216,65 @@ const StyledNavSection = styled.div`
   }
 `;
 
-const DesktopLink = styled(NavLink)`
+const Link = styled(NavLink)`
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  line-height: 1;
+  padding: 0 6px;
+
   text-decoration: none;
-  color: ${colors.grey};
-  transition: color 0.2s ease;
   font-size: 1.05rem;
+  font-weight: 850;
+  letter-spacing: 0.01em;
+
+  color: rgba(0, 0, 0, 0.74);
+  transition: color 0.18s ease;
 
   &:hover {
-    color: ${colors.white};
+    color: ${colors.orange};
   }
 
   &.active {
-    color: ${colors.white};
+    color: ${colors.orange};
   }
 `;
 
-const DesktopPrimaryLink = styled(NavLink)`
-  text-decoration: none;
-  color: ${colors.white};
-  font-size: 1.05rem;
+const PrimaryLink = styled(NavLink)`
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  line-height: 1;
 
-  padding: 0.75rem 1rem;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  text-decoration: none;
+  font-size: 1.05rem;
+  font-weight: 950;
+
+  padding: 0 0.95rem;
+  border-radius: 14px;
+
+  color: #111;
+  background: rgba(238, 52, 56, 0.1);
+  border: 1px solid rgba(238, 52, 56, 0.18);
 
   transition:
-    transform 0.2s ease,
-    border-color 0.2s ease;
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease;
 
   &:hover {
     transform: translateY(-1px);
-    border-color: ${colors.orange};
+    border-color: rgba(238, 52, 56, 0.45);
+    background: rgba(238, 52, 56, 0.14);
   }
 
   &.active {
-    border-color: ${colors.orange};
+    border-color: rgba(238, 52, 56, 0.55);
+    background: rgba(238, 52, 56, 0.16);
   }
 `;
 
-const MobileToggleButton = styled.button`
+const MobileToggle = styled.button`
   display: none;
 
   @media ${maxDeviceSize.tablet} {
@@ -315,10 +285,14 @@ const MobileToggleButton = styled.button`
     width: 44px;
     height: 44px;
 
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(255, 255, 255, 0.06);
-    color: ${colors.white};
+    border-radius: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+
+    background: rgba(255, 255, 255, 0.62);
+    color: #111;
+
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
 
     cursor: pointer;
   }
@@ -340,49 +314,83 @@ const Drawer = styled.div<{ $open: boolean }>`
   top: 0;
   right: 0;
   height: 100vh;
-  width: min(360px, 88vw);
+  width: min(380px, 92vw);
   z-index: 2001;
 
-  background: rgba(0, 0, 0, 0.92);
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.72);
+  border-left: 1px solid rgba(0, 0, 0, 0.06);
+
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+
+  box-shadow:
+    -24px 0 60px rgba(0, 0, 0, 0.18),
+    inset 1px 0 0 rgba(255, 255, 255, 0.55);
 
   transform: translateX(${({ $open }) => ($open ? "0%" : "105%")});
   transition: transform 0.25s ease;
 
   display: flex;
   flex-direction: column;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.45),
+      rgba(255, 255, 255, 0.18) 35%,
+      rgba(255, 255, 255, 0) 62%
+    );
+    opacity: 0.8;
+  }
 `;
 
 const DrawerHeader = styled.div`
+  position: relative;
+  z-index: 1;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   padding: 16px 16px 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 `;
 
 const DrawerTitle = styled.div`
   color: ${colors.orange};
-  font-weight: 900;
+  font-weight: 950;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(238, 52, 56, 0.1);
+  border: 1px solid rgba(238, 52, 56, 0.18);
 `;
 
 const DrawerClose = styled.button`
   width: 44px;
   height: 44px;
 
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.06);
-  color: ${colors.white};
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.65);
+  color: #111;
+
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
 
   cursor: pointer;
 `;
 
 const DrawerList = styled.div`
+  position: relative;
+  z-index: 1;
+
   padding: 12px;
   display: flex;
   flex-direction: column;
@@ -390,47 +398,99 @@ const DrawerList = styled.div`
 `;
 
 const DrawerItem = styled(NavLink)<{ $primary?: boolean }>`
+  position: relative;
+  z-index: 1;
+
   display: flex;
   align-items: center;
   gap: 12px;
 
   padding: 14px 14px;
-  border-radius: 14px;
+  border-radius: 16px;
 
   text-decoration: none;
-  color: ${({ $primary }) => ($primary ? colors.black : colors.white)};
-
-  background: ${({ $primary }) =>
-    $primary ? colors.orange : "rgba(255,255,255,0.06)"};
-
-  border: 1px solid
-    ${({ $primary }) => ($primary ? "transparent" : "rgba(255,255,255,0.10)")};
-
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: 0.01em;
 
+  color: rgba(0, 0, 0, 0.78);
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+
+  transition:
+    transform 0.16s ease,
+    background 0.16s ease,
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    color 0.16s ease;
+
+  ${({ $primary }) =>
+    $primary &&
+    `
+      color: #111;
+      background: rgba(238, 52, 56, 0.10);
+      border-color: rgba(238, 52, 56, 0.18);
+      box-shadow: 0 10px 24px rgba(238, 52, 56, 0.18);
+    `}
+
+  svg {
+    color: ${({ $primary }) => ($primary ? "#111" : colors.orange)};
+    transition: color 0.16s ease;
+  }
+
   &:hover {
+    transform: translateY(-1px);
+
+    background: ${({ $primary }) =>
+      $primary ? "rgba(238, 52, 56, 0.14)" : "rgba(238,52,56,0.10)"};
+
     border-color: ${({ $primary }) =>
-      $primary ? "transparent" : colors.orange};
+      $primary ? "rgba(238, 52, 56, 0.45)" : "rgba(238,52,56,0.28)"};
+
+    box-shadow: ${({ $primary }) =>
+      $primary
+        ? "0 12px 26px rgba(238,52,56,0.22)"
+        : "0 12px 26px rgba(0,0,0,0.10)"};
+
+    color: #111;
+
+    svg {
+      color: #111;
+    }
   }
 
   &.active {
-    border-color: ${({ $primary }) =>
-      $primary ? "transparent" : colors.orange};
+    background: rgba(238, 52, 56, 0.16);
+    color: #111;
+    border-color: rgba(238, 52, 56, 0.55);
+    box-shadow: 0 14px 32px rgba(238, 52, 56, 0.22);
+
+    svg {
+      color: #111;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 `;
 
 const DrawerFooter = styled.div`
+  position: relative;
+  z-index: 1;
+
   margin-top: auto;
   padding: 14px 16px 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
 `;
 
 const FooterText = styled.p`
   margin: 0;
-  color: ${colors.grayLight};
+  color: rgba(0, 0, 0, 0.62);
   line-height: 1.5;
   font-size: 0.95rem;
 `;
-
-export default Navbar;

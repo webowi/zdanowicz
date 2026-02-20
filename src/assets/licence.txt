@@ -1,3 +1,3 @@
-Hero: https://www.pexels.com/pl-pl/video/abstrakcyjny-ogien-bialy-palic-9694806/
+Hero: https://pixabay.com/pl/videos/plan-budynku-budowa-praca-budynek-42701/
 offer/building: https://www.pexels.com/pl-pl/zdjecie/cement-do-fotografii-selektywnej-ostrosci-2219024/
 offer/excavation: https://www.pexels.com/pl-pl/zdjecie/pole-maszyna-ziemia-brud-25559747/

@@ -67,16 +67,13 @@ export const AboutUs = () => {
 
 const StyledAboutWrapper = styled.section`
   position: relative;
-  background-color: ${colors.black};
-  color: ${colors.white};
-  width: 100%;
-  min-height: 50vh;
-  padding: 5rem;
+  overflow: hidden;
+  background: #f6f7f9;
+  color: #111;
 
+  padding: 5rem 2rem;
   display: flex;
   align-items: center;
-
-  overflow: hidden;
 `;
 
 const RoofBg = styled.div`
@@ -87,35 +84,27 @@ const RoofBg = styled.div`
 
   background-image: url(${roofImage});
   background-repeat: no-repeat;
-
   background-position: top right;
-
   background-size: min(900px, 70vw) auto;
 
-  opacity: 0.22;
-  filter: saturate(0.8) contrast(1.05);
+  opacity: 0.14;
+  filter: saturate(0.9) contrast(1.05);
 
-  mask-image: linear-gradient(
-    to bottom,
+  mask-image: radial-gradient(
+    70% 70% at 85% 20%,
     rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.85) 35%,
+    rgba(0, 0, 0, 0.65) 45%,
     rgba(0, 0, 0, 0) 75%
   );
 
-  @supports not (mask-image: linear-gradient(black, transparent)) {
-    background-image:
-      linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
-      url(${roofImage});
+  @supports not (mask-image: radial-gradient(black, transparent)) {
+    opacity: 0.12;
   }
 
   @media ${maxDeviceSize.tablet} {
     background-position: top center;
     background-size: min(700px, 95vw) auto;
-    opacity: 0.18;
-  }
-
-  @media ${maxDeviceSize.tablet} {
-    display: none;
+    opacity: 0.1;
   }
 `;
 
@@ -154,12 +143,5 @@ const StyledTitleContent = styled(motion.div)`
 `;
 
 const StyledDescription = styled(motion.p)`
-  font-size: 1.2rem;
-  line-height: 1.8;
-  max-width: 800px;
-  text-align: left;
-
-  @media ${maxDeviceSize.tablet} {
-    font-size: 1rem;
-  }
+  color: rgba(0, 0, 0, 0.75);
 `;

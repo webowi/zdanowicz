@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { colors } from "../../utils/colors";
 import GroutImage from "../../assets/grout.webp";
 
 export const WhyUs: React.FC = () => {
@@ -44,36 +43,22 @@ const ContentOverlay = styled.div`
 `;
 
 const TextBlock = styled.div`
-  background: rgba(0, 0, 0, 0.6);
-  color: ${colors.white};
-  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.65);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border-radius: 18px;
+
   padding: 2rem;
-  text-align: center;
-  max-width: 600px;
 
-  h2 {
-    font-size: 2.4rem;
-    margin-bottom: 1rem;
-    color: ${colors.orange};
-    font-weight: 700;
-    text-transform: uppercase;
-  }
+  color: #111;
 
-  p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-  }
+  border: 1px solid rgba(255, 255, 255, 0.6);
 
-  @media (max-width: 768px) {
-    h2 {
-      font-size: 1.8rem;
-    }
-
-    p {
-      font-size: 1rem;
-    }
-  }
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 `;
 
 const ImageContainer = styled.div`
