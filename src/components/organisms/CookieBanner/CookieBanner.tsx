@@ -86,8 +86,6 @@ export const CookieBanner: React.FC<Props> = ({
   );
 };
 
-/* ================= STYLES (spójne z Navbar/BottomBar) ================= */
-
 const Wrap = styled.div`
   position: fixed;
   z-index: 9999;

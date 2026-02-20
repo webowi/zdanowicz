@@ -49,7 +49,6 @@ const clamp = (value: number, min: number, max: number) =>
 const RealizationsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  // To jest "intencja" użytkownika (co kliknął). Prawdziwą stronę wyliczamy poniżej.
   const [pageInput, setPageInput] = useState(1);
 
   const gridTopRef = useRef<HTMLDivElement | null>(null);
@@ -69,11 +68,6 @@ const RealizationsPage: React.FC = () => {
     return Math.max(1, Math.ceil(filteredRealizations.length / PAGE_SIZE));
   }, [filteredRealizations.length]);
 
-  // Reset strony do 1 przy zmianie wyszukiwania — bez useEffect:
-  // jeśli searchQuery niepuste/zmienia się, w onChange ustawiamy pageInput = 1
-  // (zobacz handler inputa poniżej)
-
-  // Faktyczna strona zawsze w zakresie 1..pageCount
   const page = useMemo(
     () => clamp(pageInput, 1, pageCount),
     [pageInput, pageCount],
@@ -125,7 +119,7 @@ const RealizationsPage: React.FC = () => {
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
-                setPageInput(1); // reset bez useEffect
+                setPageInput(1);
               }}
               placeholder="Wyszukaj realizację (np. dom, hala, elewacja)…"
             />
@@ -181,8 +175,6 @@ const RealizationsPage: React.FC = () => {
 };
 
 export default RealizationsPage;
-
-/* ---------------- Pagination ---------------- */
 
 type PaginationProps = {
   page: number;
@@ -261,8 +253,6 @@ const Pagination: React.FC<PaginationProps> = ({
     </Pager>
   );
 };
-
-/* ---------------- Styled ---------------- */
 
 const Hero = styled.header<{ $bg: string }>`
   --nav-h: 68px;
@@ -425,8 +415,6 @@ const EmptyTitle = styled.h2`
 const EmptyText = styled.p`
   color: rgba(0, 0, 0, 0.68);
 `;
-
-/* Pagination styles */
 
 const Pager = styled.nav`
   margin: 1.75rem auto 0;
