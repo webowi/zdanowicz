@@ -201,6 +201,7 @@ const Container = styled.div`
 `;
 
 const Card = styled.div`
+  margin-top: 1rem;
   border-radius: 24px;
   overflow: hidden;
 
@@ -216,7 +217,7 @@ const Card = styled.div`
 `;
 
 const Header = styled.header`
-  padding: 22px 22px 16px;
+  padding: 24px 22px 16px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 
   background: linear-gradient(

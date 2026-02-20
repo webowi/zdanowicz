@@ -289,6 +289,8 @@ const GridCore = styled.div`
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1rem;
 
+  align-items: stretch;
+
   @media (max-width: 1024px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -300,6 +302,14 @@ const GridCore = styled.div`
 
 const MotionItem = styled(motion.div)`
   will-change: transform, opacity;
+
+  height: 100%;
+  display: flex;
+
+  & > * {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const AddonBox = styled.section`

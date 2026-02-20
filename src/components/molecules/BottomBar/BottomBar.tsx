@@ -144,22 +144,22 @@ const Wrapper = styled.div<{ $visible: boolean }>`
     transform 220ms ease,
     opacity 180ms ease;
 
-  background: rgba(10, 10, 10, 0.38);
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.62);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
 
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
 
   padding-bottom: env(safe-area-inset-bottom);
 
   box-shadow:
-    0 -10px 30px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 -10px 30px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
 
   @supports not (
     (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
   ) {
-    background: rgba(0, 0, 0, 0.78);
+    background: rgba(255, 255, 255, 0.92);
   }
 `;
 
@@ -167,6 +167,7 @@ const Inner = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 10px 14px;
+
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
@@ -187,16 +188,24 @@ const Item = styled.div<{ $clickable?: boolean }>`
   padding: 12px;
   border-radius: 16px;
 
-  color: ${colors.white};
   text-decoration: none;
 
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(0, 0, 0, 0.78);
 
-  backdrop-filter: blur(14px) saturate(160%);
-  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(0, 0, 0, 0.06);
 
-  transition: all 0.18s ease;
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    color 0.18s ease;
 
   svg {
     color: ${colors.orange};
@@ -209,7 +218,10 @@ const Item = styled.div<{ $clickable?: boolean }>`
 
     &:hover {
       transform: translateY(-1px);
-      background: rgba(255,255,255,0.09);
+      background: rgba(238, 52, 56, 0.08);
+      border-color: rgba(238, 52, 56, 0.22);
+      box-shadow: 0 12px 26px rgba(0,0,0,0.10);
+      color: #111;
     }
 
     &:active {
@@ -217,7 +229,7 @@ const Item = styled.div<{ $clickable?: boolean }>`
     }
   `
       : `
-    opacity: 0.9;
+    opacity: 0.95;
   `}
 `;
 
@@ -229,12 +241,14 @@ const Text = styled.div`
 
 const Label = styled.span`
   font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(0, 0, 0, 0.55);
 `;
 
 const Value = styled.span`
   font-size: 0.98rem;
-  font-weight: 700;
+  font-weight: 800;
+
+  color: rgba(0, 0, 0, 0.78);
 
   white-space: nowrap;
   overflow: hidden;

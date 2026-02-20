@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 import { colors } from "../../../utils/colors";
 import { maxDeviceSize } from "../../../utils/deviceSize";
 import {
   getCookiesConsent,
   setCookiesConsent,
 } from "../../../utils/cookies/cookiesConsent";
-import { Link } from "react-router-dom";
 import { pagesPaths } from "../../../constans/pagesPaths";
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 };
 
 export const CookieBanner: React.FC<Props> = ({
-  privacyPolicyPath = "/polityka-prywatnosci",
+  privacyPolicyPath = pagesPaths.privacyPolicy,
 }) => {
   const [visible, setVisible] = useState(() => !getCookiesConsent());
   const [expanded, setExpanded] = useState(false);
@@ -53,14 +53,15 @@ export const CookieBanner: React.FC<Props> = ({
               <List>
                 <li>utrzymanie poprawnego działania serwisu,</li>
                 <li>podstawowe zabezpieczenia techniczne,</li>
-                <li>
-                  zapamiętanie Twojej decyzji o wyświetlaniu tego komunikatu.
-                </li>
+                <li>zapamiętanie Twojej decyzji o wyświetlaniu komunikatu.</li>
               </List>
               <MoreText>
                 Nie używamy cookies analitycznych ani marketingowych (np. do
                 śledzenia reklam). Szczegóły znajdziesz w{" "}
-                <Link to={pagesPaths.privacyPolicy}>Polityce Prywatności</Link>.
+                <PolicyInlineLink to={privacyPolicyPath}>
+                  Polityce Prywatności
+                </PolicyInlineLink>
+                .
               </MoreText>
             </More>
           )}
@@ -71,9 +72,7 @@ export const CookieBanner: React.FC<Props> = ({
             </LinkBtn>
 
             <RightActions>
-              <GhostLink href={privacyPolicyPath}>
-                Polityka prywatności
-              </GhostLink>
+              <GhostLink to={privacyPolicyPath}>Polityka prywatności</GhostLink>
               <PrimaryBtn type="button" onClick={understand}>
                 Rozumiem
               </PrimaryBtn>
@@ -87,9 +86,12 @@ export const CookieBanner: React.FC<Props> = ({
   );
 };
 
+/* ================= STYLES (spójne z Navbar/BottomBar) ================= */
+
 const Wrap = styled.div`
   position: fixed;
   z-index: 9999;
+
   left: 1.5rem;
   right: 1.5rem;
   bottom: 1.5rem;
@@ -97,57 +99,72 @@ const Wrap = styled.div`
   max-width: 980px;
   margin: 0 auto;
 
-  background: rgba(0, 0, 0, 0.86);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: 18px;
-  padding: 1.25rem 1.25rem 1.1rem;
 
-  backdrop-filter: blur(14px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  padding: 1.15rem 1.15rem 1.05rem;
+
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
 
   @media ${maxDeviceSize.phone} {
     left: 1rem;
     right: 1rem;
     bottom: 1rem;
+    padding: 1rem 1rem 0.95rem;
+  }
+
+  @supports not (
+    (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+  ) {
+    background: rgba(255, 255, 255, 0.92);
   }
 `;
 
 const Header = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.85rem;
+  gap: 0.65rem;
+  margin-bottom: 0.8rem;
 `;
 
 const Badge = styled.span`
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: ${colors.white};
-  padding: 0.35rem 0.6rem;
+  padding: 0.38rem 0.65rem;
   border-radius: 999px;
-  font-size: 0.85rem;
-  letter-spacing: 0.04em;
+
+  background: rgba(238, 52, 56, 0.1);
+  border: 1px solid rgba(238, 52, 56, 0.18);
+  color: ${colors.orange};
+
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
 `;
 
 const Title = styled.p`
   margin: 0;
-  color: ${colors.yellow};
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  color: #111;
+  font-weight: 950;
+  letter-spacing: 0.02em;
 `;
 
 const Body = styled.div``;
 
 const Text = styled.p`
   margin: 0;
-  color: ${colors.grayLight};
-  line-height: 1.65;
-  font-size: 1.05rem;
+  color: rgba(0, 0, 0, 0.72);
+  line-height: 1.6;
+  font-size: 1.02rem;
 
   strong {
-    color: ${colors.white};
-    font-weight: 700;
+    color: #111;
+    font-weight: 900;
   }
 
   @media ${maxDeviceSize.phone} {
@@ -156,15 +173,15 @@ const Text = styled.p`
 `;
 
 const More = styled.div`
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 0.95rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
 `;
 
 const MoreTitle = styled.p`
   margin: 0 0 0.6rem;
-  color: ${colors.white};
-  font-weight: 700;
+  color: #111;
+  font-weight: 900;
 `;
 
 const List = styled.ul`
@@ -172,22 +189,24 @@ const List = styled.ul`
   padding-left: 1.2rem;
 
   li {
-    color: ${colors.grayLight};
-    line-height: 1.65;
+    color: rgba(0, 0, 0, 0.68);
+    line-height: 1.6;
     margin-bottom: 0.35rem;
   }
 `;
 
 const MoreText = styled.p`
   margin: 0;
-  color: ${colors.grayLight};
-  line-height: 1.65;
+  color: rgba(0, 0, 0, 0.68);
+  line-height: 1.6;
+`;
 
-  a {
-    color: ${colors.yellow};
-    text-decoration: none;
-  }
-  a:hover {
+const PolicyInlineLink = styled(NavLink)`
+  color: ${colors.orange};
+  text-decoration: none;
+  font-weight: 900;
+
+  &:hover {
     text-decoration: underline;
   }
 `;
@@ -197,7 +216,7 @@ const Actions = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  margin-top: 1.1rem;
+  margin-top: 1.05rem;
 
   @media ${maxDeviceSize.phone} {
     flex-direction: column;
@@ -210,13 +229,14 @@ const LinkBtn = styled.button`
   border: none;
   padding: 0;
   cursor: pointer;
-  color: ${colors.grayLight};
-  font-weight: 700;
+
+  color: rgba(0, 0, 0, 0.62);
+  font-weight: 900;
   letter-spacing: 0.02em;
   text-align: left;
 
   &:hover {
-    color: ${colors.white};
+    color: #111;
   }
 `;
 
@@ -230,30 +250,43 @@ const RightActions = styled.div`
   }
 `;
 
-const GhostLink = styled.a`
-  color: ${colors.grayLight};
+const GhostLink = styled(NavLink)`
+  color: rgba(0, 0, 0, 0.62);
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 900;
 
   &:hover {
-    color: ${colors.white};
+    color: #111;
     text-decoration: underline;
   }
 `;
 
 const PrimaryBtn = styled.button`
-  border: none;
+  border: 1px solid rgba(238, 52, 56, 0.18);
   cursor: pointer;
-  border-radius: 14px;
-  padding: 0.85rem 1.1rem;
-  font-weight: 900;
-  letter-spacing: 0.03em;
 
-  background: ${colors.yellow};
-  color: ${colors.black};
+  border-radius: 14px;
+  padding: 0.78rem 1.05rem;
+
+  font-weight: 950;
+  letter-spacing: 0.02em;
+
+  color: #111;
+  background: rgba(238, 52, 56, 0.1);
+
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    border-color: rgba(238, 52, 56, 0.45);
+    background: rgba(238, 52, 56, 0.14);
+  }
 
   &:active {
-    transform: translateY(1px);
+    transform: translateY(0);
   }
 `;
 

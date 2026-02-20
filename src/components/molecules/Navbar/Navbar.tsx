@@ -101,7 +101,6 @@ const Navbar = () => {
         </Bar>
       </Wrap>
 
-      {/* key sprawia, że po zmianie trasy overlay/drawer "czyści się" bez efektu z setState */}
       <Backdrop
         key={`backdrop:${location.pathname}`}
         $open={menuOpen}
@@ -157,8 +156,6 @@ const Navbar = () => {
 
 export default Navbar;
 
-/* STYLES bez zmian poniżej */
-
 const Wrap = styled.header`
   position: fixed;
   top: 0;
@@ -166,28 +163,52 @@ const Wrap = styled.header`
   width: 100%;
   z-index: 1010;
 
-  background: rgba(255, 255, 255, 0.62);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  pointer-events: none;
 
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  @media ${maxDeviceSize.tablet} {
+    pointer-events: auto;
 
-  transition:
-    background 0.18s ease,
-    border-color 0.18s ease,
-    backdrop-filter 0.18s ease;
+    background: rgba(255, 255, 255, 0.62);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+
+    transition:
+      background 0.18s ease,
+      border-color 0.18s ease,
+      backdrop-filter 0.18s ease;
+  }
 `;
 
 const Bar = styled.nav`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 12px 18px;
+  pointer-events: auto;
+
+  max-width: 1100px;
+  margin: 10px auto 0;
+  padding: 8px 14px;
 
   display: flex;
   align-items: center;
 
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 18px;
+
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+
   @media ${maxDeviceSize.tablet} {
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 10px 12px;
+
+    background: transparent;
+    border: none;
+    border-radius: 0;
+
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 `;
 
@@ -209,7 +230,7 @@ const Logo = styled.div`
 const DesktopNav = styled.div`
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 10px;
 
   @media ${maxDeviceSize.tablet} {
     display: none;
@@ -219,12 +240,12 @@ const DesktopNav = styled.div`
 const Link = styled(NavLink)`
   display: inline-flex;
   align-items: center;
-  height: 44px;
+  height: 38px;
   line-height: 1;
-  padding: 0 6px;
+  padding: 0 4px;
 
   text-decoration: none;
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 850;
   letter-spacing: 0.01em;
 
@@ -243,15 +264,15 @@ const Link = styled(NavLink)`
 const PrimaryLink = styled(NavLink)`
   display: inline-flex;
   align-items: center;
-  height: 44px;
+  height: 38px;
   line-height: 1;
 
   text-decoration: none;
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 950;
 
-  padding: 0 0.95rem;
-  border-radius: 14px;
+  padding: 0 0.65rem;
+  border-radius: 12px;
 
   color: #111;
   background: rgba(238, 52, 56, 0.1);
