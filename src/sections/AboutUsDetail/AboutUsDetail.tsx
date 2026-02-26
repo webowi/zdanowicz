@@ -9,6 +9,7 @@ import {
   MdOutlineFormatPaint,
   MdOutlineFactCheck,
   MdOutlineEnergySavingsLeaf,
+  MdOutlineThermostat,
 } from "react-icons/md";
 
 import { GiBrickWall } from "react-icons/gi";
@@ -174,6 +175,18 @@ export const AboutUsDetail: React.FC<Props> = ({ $isHighlighted = false }) => {
                 </MiniText>
               </div>
             </MiniCard>
+            <MiniCard>
+              <MiniIcon>
+                <MdOutlineThermostat size={20} />
+              </MiniIcon>
+              <div>
+                <MiniTitle>Badania kamerą termowizyjną</MiniTitle>
+                <MiniText>
+                  TESTO S872 • mostki cieplne i identyfikacja wad
+                  konstrukcyjnych
+                </MiniText>
+              </div>
+            </MiniCard>
           </GridAddons>
 
           <Note>
@@ -336,8 +349,12 @@ const AddonHeader = styled.div`
 const GridAddons = styled.div`
   padding: 0 16px 10px;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
+
+  @media (min-width: 1100px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 
   @media ${maxDeviceSize.tablet} {
     grid-template-columns: 1fr;
